@@ -1,0 +1,4 @@
+#Fri May 12 00:11:49 EEST 2023
+base.0=D\:\\Desktop2\\newVersion\\sMarket-App\\frontend\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
