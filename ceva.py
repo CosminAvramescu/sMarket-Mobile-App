@@ -9,7 +9,7 @@ import os
 from gridfs import GridFS
 from urllib.request import urlopen
 import math
-from matplotlib.patches import Arrow
+from matplotlib.pyplot import arrow
 from matplotlib import animation
 
 myclient = MongoClient("mongodb+srv://andreinapruiu:xLOLaVRwqWOA2DUt@cluster0.dw2sytn.mongodb.net/test")
@@ -38,7 +38,6 @@ grid = np.array([
 # start point and goal
 start = (14, 7)
 goal = (0, 14)
-arrow = Arrow(start[1], start[0], 0.5, 0.5, width=0.1, color='red')
 
 def line_intersects(a1, a2, b1, b2):
     def ccw(a, b, c):
@@ -56,7 +55,7 @@ def line_intersects(a1, a2, b1, b2):
         return False
 
 def euclidean_distance(a, b):
-    return math.sqrt((a[0] - b[0])**2 + (a[1] - b[1])**2)
+    return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
 
 def find_path(nodes, start, end):
     nodes_sorted_start = sorted(nodes, key=lambda node: euclidean_distance(node, start))
@@ -106,7 +105,7 @@ def find_path(nodes, start, end):
     return path
 
 # Find the paths between the nodes
-nodes = [ (12, 5), (4, 11), (8, 5), (14, 7), (2, 11), (0, 14)]
+nodes = [(10, 4), (12, 5), (4, 11), (4, 3), (8, 5), (14, 7), (2, 11), (0, 14)]
 path = find_path(nodes, start, goal)
 
 # Print the paths
@@ -135,11 +134,10 @@ for i in range(grid.shape[0]):
 
 # Plot the grid with the specified color scheme
 ax.imshow(grid, cmap=cmap)
-ax.add_patch(arrow)
 
 # Plot the nodes
 for node in nodes:
-    ax.scatter(node[1], node[0], marker="*", color="blue", s=200)
+    ax.scatter(node[1], node[0], marker="*", color="blue", s=2000)
 
 # Plot the start and goal points
 ax.scatter(start[1], start[0], marker="*", color="red", s=200)
@@ -148,25 +146,15 @@ ax.scatter(goal[1], goal[0], marker="*", color="green", s=200)
 # Plot the path
 ax.plot(y_coords, x_coords, color="black", marker=">")
 
-for i in range(len(path)-1):
-    pos1 = path[i]
-    pos2 = path[i+1]
-    arrow.x = pos1[1]
-    arrow.y = pos1[0]
-    # arrow.set_xy((pos1[1], pos1[0]))
-    dx = pos2[1] - pos1[1]
-    dy = pos2[0] - pos1[0]
-    arrow.width = euclidean_distance(pos1, pos2)
-    arrow.height = 0.1
-    arrow.set_color('red')
-    arrow.set_linewidth(0.1)
-    arrow.set_visible(True)
-    arrow.set_transform(matplotlib.transforms.Affine2D().rotate(-np.arctan2(dy,dx)).translate(pos1[1], pos1[0]) + ax.transData)
-    plt.pause(0.5)
-    # plt.show()
+# Define the arrow object outside of the loop
+for i in range(len(path) - 1):
+    arrow1 = arrow(path[i][1], path[i][0], path[i+1][1] - path[i][1], path[i+1][0] - path[i][0], width=0.1, color='red')
+    filename = 'file' + str(i) + '.png'
+    plt.savefig(filename)
+    arrow1.set_visible(False)
+
 
 plt.savefig('file.png')
-# plt.show()
 
 fs = GridFS(mydb)
 
