@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/gridcategories.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -9,8 +10,11 @@ class GridCart extends StatefulWidget {
   _GridCartState createState() => _GridCartState();
 }
 
+var all = false;
+
 class _GridCartState extends State<GridCart> {
   List<dynamic>? _products;
+  var isFavorite=false;
 
   @override
   void initState() {
@@ -19,16 +23,31 @@ class _GridCartState extends State<GridCart> {
   }
 
   Future<void> _fetchProducts() async {
-    final response = await http.get(
-      Uri.parse('http://localhost:8082/product/getAllProducts'),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-        'Accept': '*/*',
-      },
-    );
+    final response;
+    if (all == false && category!=null) {
+      response = await http.get(
+        Uri.parse('http://localhost:8082/category/getByCategory/${category}'),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+        },
+      );
+    } else {
+      response = await http.get(
+        Uri.parse('http://localhost:8082/product/getAllProducts'),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+        },
+      );
+      all=false;
+    }
     if (response.statusCode == 200) {
       setState(() {
         _products = jsonDecode(response.body) as List<dynamic>;
@@ -67,19 +86,19 @@ class _GridCartState extends State<GridCart> {
                               color: Colors.blue,
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: const Text(
-                              "-50%",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                // isFavorite = !isFavorite;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.favorite_border,
+                              // isFavorite ? Icons.favorite : Icons.favorite_border,
+                              color: Colors.red,
                             ),
                           ),
-                          const Icon(
-                            Icons.favorite_border,
-                            color: Colors.red,
-                          )
                         ],
                       ),
                       InkWell(
@@ -87,7 +106,8 @@ class _GridCartState extends State<GridCart> {
                         child: Container(
                           margin: const EdgeInsets.all(10),
                           child: Image.network(
-                            "${_products![i]['imageLink']}", fit: BoxFit.cover,
+                            "${_products![i]['imageLink']}",
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -105,7 +125,7 @@ class _GridCartState extends State<GridCart> {
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
-                        child:const  Text(
+                        child: const Text(
                           "cmz",
                           style: TextStyle(
                             fontSize: 10,
