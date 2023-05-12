@@ -5,7 +5,7 @@ import 'package:frontend/pages/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategoriesPage extends StatelessWidget {
-  const CategoriesPage({Key? key}) : super(key: key);
+  CategoriesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -115,12 +115,17 @@ class CategoriesPage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  ),
+                  onTap: () {
+                      // Set all variables to true
+                      all=true;
+                      // Navigate to HomePage
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomePage()),
+                      );
+                  },
                   child: Text(
-                    'Go to products >',
+                    'Go to all products >',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
                       fontSize: 11,
