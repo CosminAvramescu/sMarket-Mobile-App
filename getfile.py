@@ -6,13 +6,6 @@ myclient = MongoClient("mongodb+srv://andreinapruiu:xLOLaVRwqWOA2DUt@cluster0.dw
 mydb = myclient["smarket-api-db"]
 fs = GridFS(mydb)
 
-#download all the files from the database
-
-for file in fs.find():
-	with open(file.filename, "wb") as f:
-		f.write(file.read())
-    
-
 filename = "file"
 file_id = fs.find_one({"filename": filename})._id
 file = fs.get(file_id)
