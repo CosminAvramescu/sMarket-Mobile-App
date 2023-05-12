@@ -61,21 +61,6 @@ class _GridCartState extends State<GridCart> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Text(
-                              "-50%",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
                           const Icon(
                             Icons.favorite_border,
                             color: Colors.red,
@@ -103,20 +88,10 @@ class _GridCartState extends State<GridCart> {
                           ),
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child:const  Text(
-                          "cmz",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.yellow,
-                          ),
-                        ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "${_products![i]['price']}",
