@@ -17,7 +17,7 @@ public class ShoppingList {
 
     //String mealRecipe;
 
-    @DBRef
+    @DBRef(lazy = true)
     List<Product> productList;
 
     public ShoppingList(List<Product> productList) {

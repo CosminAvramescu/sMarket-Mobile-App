@@ -2,7 +2,9 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.ProductDTO;
 import com.example.backend.mapper.ProductMapper;
+import com.example.backend.model.Category;
 import com.example.backend.model.Product;
+import com.example.backend.repository.CategoryRepository;
 import com.example.backend.service.ProductService;
 import com.example.backend.service.ShopService;
 import lombok.Data;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/product")
 @Data
+@CrossOrigin(origins="*")
 public class ProductController {
     private final ProductService productService;
 
@@ -27,8 +30,7 @@ public class ProductController {
 
     private final ProductMapper productMapper;
 
-    List<ProductDTO> productList;
-
+    private final CategoryRepository categoryRepository;
     @PostMapping("post")
     public Product addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
@@ -48,13 +50,7 @@ public class ProductController {
 
     @GetMapping("getAllProducts")
     public List<ProductDTO> getAllProducts(){
-        productList=productMapper.toListProductDTO(productService.getAllProducts());
-        return productList;
-    }
-
-    @GetMapping("getAllFlutter")
-    public List<ProductDTO> getAllFlutter(){
-        return productList;
+        return productMapper.toListProductDTO(productService.getAllProducts());
     }
 
     @PostMapping(path = "excel", consumes = "multipart/form-data")
@@ -74,10 +70,16 @@ public class ProductController {
                 product_row = (int) Float.parseFloat(String.valueOf(row.getCell(4)));
                 product_section = (int) Float.parseFloat(String.valueOf(row.getCell(5)));
                 product_shelve = (int) Float.parseFloat(String.valueOf(row.getCell(6)));
+                Category category=categoryRepository.getCategoryByName(String.valueOf(row.getCell(7)));
+                List<Product> productList=category.getProductList();
 
                 Product product = new Product(name, price, imageLink, "shelfType",
-                        product_row, product_section, product_shelve);
+                        product_row, product_section, product_shelve, category);
                 productService.addProduct(product);
+
+                productList.add(product);
+                category.setProductList(productList);
+                categoryRepository.save(category);
             }
         } catch (IOException e) {
             e.printStackTrace();

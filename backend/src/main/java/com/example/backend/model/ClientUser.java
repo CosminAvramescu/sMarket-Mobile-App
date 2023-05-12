@@ -23,6 +23,6 @@ public class ClientUser {
 
     String lastName;
 
-    @DBRef
+    @DBRef(lazy = true)
     List<ShoppingList> shoppingLists;
 }

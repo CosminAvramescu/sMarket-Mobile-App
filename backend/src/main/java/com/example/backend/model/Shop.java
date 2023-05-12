@@ -21,7 +21,7 @@ public class Shop {
 
     String imageLink;
 
-    @DBRef
+    @DBRef(lazy = true)
     List<Product> productList;
 
 
