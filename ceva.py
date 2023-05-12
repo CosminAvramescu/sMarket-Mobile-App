@@ -163,7 +163,7 @@ for i in range(len(path)-1):
     arrow.set_visible(True)
     arrow.set_transform(matplotlib.transforms.Affine2D().rotate(-np.arctan2(dy,dx)).translate(pos1[1], pos1[0]) + ax.transData)
     plt.pause(0.5)
-    plt.show()
+    # plt.show()
 
 plt.savefig('file.png')
 # plt.show()
