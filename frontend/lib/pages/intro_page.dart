@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/categories_page.dart';
 import 'package:frontend/pages/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -90,7 +91,7 @@ class IntroPage extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
+              MaterialPageRoute(builder: (context) => const CategoriesPage()),
             ),
             child: Container(
               padding:

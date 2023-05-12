@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/gridcart.dart';
+import 'package:frontend/pages/gridcategories.dart';
+import 'package:frontend/pages/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class CategoriesPage extends StatelessWidget {
+  const CategoriesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +106,7 @@ class HomePage extends StatelessWidget {
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Text(
-                    '< Back to all categories',
+                    '< Back to start',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
                       fontSize: 11,
@@ -113,9 +115,12 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/cart'),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  ),
                   child: Text(
-                    'Go to cart >',
+                    'Go to products >',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
                       fontSize: 11,
@@ -126,7 +131,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(child: GridCart())
+          const Expanded(child: GridCategories())
         ],
       ),
       drawer: Drawer(
