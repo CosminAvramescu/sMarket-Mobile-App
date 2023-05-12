@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.example.backend.repository.CategoryRepository;
 import lombok.Data;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
@@ -30,14 +31,16 @@ public class Product {
 
     Integer shelve;
 
-    @DBRef
+    @DBRef(lazy = true)
     Shop shop;
 
-    @DBRef
+    @DBRef(lazy = true)
     ShoppingList shoppingList;
 
+    @DBRef(lazy = true)
+    Category category;
     public Product(String name, String price, String imageLink,
-                   String shelfType, Integer row, Integer section, Integer shelve) {
+                   String shelfType, Integer row, Integer section, Integer shelve, Category category) {
         this.name = name;
         this.price = price;
         this.imageLink = imageLink;
@@ -45,6 +48,7 @@ public class Product {
         this.row = row;
         this.section = section;
         this.shelve = shelve;
+        this.category=category;
     }
 
     @Override

@@ -18,6 +18,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("shoppingList")
+@CrossOrigin(origins="*")
 public class ShoppingListController {
     private final ShoppingListService shoppingListService;
     private final ProductService productService;
@@ -57,6 +58,5 @@ public class ShoppingListController {
     public ShoppingList setProduct(@PathVariable String shoppingListId, @PathVariable String productId){
         return shoppingListService.setProduct(shoppingListId, productId);
     }
-
 }
 

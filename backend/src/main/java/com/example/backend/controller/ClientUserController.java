@@ -4,14 +4,12 @@ import com.example.backend.model.AdminUser;
 import com.example.backend.model.ClientUser;
 import com.example.backend.service.ClientUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("clientUser")
+@CrossOrigin(origins="*")
 public class ClientUserController {
     private final ClientUserService clientUserService;
 

@@ -12,4 +12,5 @@ import java.util.List;
 
 public interface ProductRepository extends MongoRepository<Product, String> {
     Product getProductById(String id);
+
 }

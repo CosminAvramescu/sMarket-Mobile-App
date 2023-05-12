@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("shop")
+@CrossOrigin(origins="*")
 public class ShopController {
     private final ShopService shopService;
     private final ProductService productService;
