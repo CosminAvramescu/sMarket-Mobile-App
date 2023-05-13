@@ -146,17 +146,20 @@ ax.scatter(goal[1], goal[0], marker="*", color="green", s=200)
 # Plot the path
 ax.plot(y_coords, x_coords, color="black", marker=">")
 
+from io import BytesIO
+
 fs = GridFS(mydb)
+
 # Define the arrow object outside of the loop
 for i in range(len(path) - 1):
-	arrow1 = arrow(path[i][1], path[i][0], path[i+1][1] - path[i][1], path[i+1][0] - path[i][0], width=0.1, color='red')
-	filename = 'file' + str(i) + '.png'
-	plt.savefig(filename)
-	arrow1.set_visible(False)
-	with open(filename, 'rb') as f:
-		contents = f.read()
+    arrow1 = arrow(path[i][1], path[i][0], path[i+1][1] - path[i][1], path[i+1][0] - path[i][0], width=0.1, color='red')
+    filename = 'file' + str(i) + '.png'
+    img_data = BytesIO()
+    plt.savefig(img_data, format='png')
+    img_data.seek(0)
+    fs.put(img_data, filename=filename)
+    arrow1.set_visible(False)
 
-	fs.put(contents, filename = filename)
 
 plt.savefig('file.png')
 
