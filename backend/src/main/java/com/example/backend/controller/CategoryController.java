@@ -1,6 +1,4 @@
 package com.example.backend.controller;
-
-
 import com.example.backend.dto.CategoryDTO;
 import com.example.backend.dto.ProductDTO;
 import com.example.backend.mapper.CategoryMapper;

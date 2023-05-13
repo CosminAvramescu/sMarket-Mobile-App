@@ -10,11 +10,28 @@ class GridCart extends StatefulWidget {
   _GridCartState createState() => _GridCartState();
 }
 
+class FavoriteProduct {
+  String name;
+  String imageLink;
+
+  FavoriteProduct(this.name, this.imageLink);
+
+  @override
+  String toString(){
+    return "$name $imageLink";
+  }
+
+  Map<String, dynamic> toMap() => {
+    'name': name,
+    'imageLink': imageLink,
+  };
+}
+
 var all = false;
+List<FavoriteProduct> favoriteProducts = [];
 
 class _GridCartState extends State<GridCart> {
   List<dynamic>? _products;
-  var isFavorite=false;
 
   @override
   void initState() {
@@ -24,7 +41,7 @@ class _GridCartState extends State<GridCart> {
 
   Future<void> _fetchProducts() async {
     final response;
-    if (all == false && category!=null) {
+    if (all == false && category != null) {
       response = await http.get(
         Uri.parse('http://localhost:8082/category/getByCategory/${category}'),
         headers: {
@@ -46,7 +63,7 @@ class _GridCartState extends State<GridCart> {
           'Accept': '*/*',
         },
       );
-      all=false;
+      all = false;
     }
     if (response.statusCode == 200) {
       setState(() {
@@ -55,6 +72,28 @@ class _GridCartState extends State<GridCart> {
     } else {
       throw Exception('Failed to fetch products from backend API');
     }
+  }
+
+  void _toggleFavoriteProduct(String name, String imageLink) {
+    setState(() {
+      FavoriteProduct favoriteProduct = FavoriteProduct(name, imageLink);
+      for (int i = 0; i < favoriteProducts.length; i++) {
+        if (favoriteProducts[i].name == name) {
+          favoriteProducts.remove(favoriteProducts[i]);
+          return;
+        }
+      }
+      favoriteProducts.add(favoriteProduct);
+    });
+  }
+
+  bool _isProductFavorite(String name) {
+    for (int i = 0; i < favoriteProducts.length; i++) {
+      if (favoriteProducts[i].name == name) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @override
@@ -67,90 +106,79 @@ class _GridCartState extends State<GridCart> {
             padding: const EdgeInsets.all(10),
             children: [
               for (int i = 0; i < _products!.length; i++)
-                Container(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                // isFavorite = !isFavorite;
-                              });
-                            },
-                            icon: Icon(
-                              Icons.favorite_border,
-                              // isFavorite ? Icons.favorite : Icons.favorite_border,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          margin: const EdgeInsets.all(10),
-                          child: Image.network(
-                            "${_products![i]['imageLink']}",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(bottom: 1),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "${_products![i]['name']}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: const Text(
-                          "cmz",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.yellow,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
+                GestureDetector(
+                  onTap: () {
+                    // Callback function to be executed on tap
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.only(left: 15, right: 15, top: 10),
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "${_products![i]['price']}",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
+                            IconButton(
+                              onPressed: () {
+                                _toggleFavoriteProduct(_products![i]['name'],
+                                    _products![i]['imageLink']);
+                              },
+                              icon: Icon(
+                                _isProductFavorite(_products![i]['name'])
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: Colors.red,
                               ),
                             ),
-                            // add more widgets here
                           ],
                         ),
-                      ),
-                    ],
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            margin: const EdgeInsets.all(10),
+                            child: Image.network(
+                              "${_products![i]['imageLink']}",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(bottom: 1),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "${_products![i]['name']}",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${_products![i]['price']}",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              // add more widgets here
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
             ],

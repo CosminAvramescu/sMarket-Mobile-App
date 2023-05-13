@@ -77,10 +77,11 @@ class IntroPage extends StatelessWidget {
               bottom: 0,
             ),
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad .',
+              " Your minutes are gold, s'Market\n                 is here to hold",
               textAlign: TextAlign.justify,
               style: GoogleFonts.montserrat(
-                fontSize: 15,
+                fontSize: 20,
+                color: Colors.deepOrangeAccent
               ),
             ),
           ),

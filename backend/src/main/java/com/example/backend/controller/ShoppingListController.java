@@ -22,18 +22,17 @@ import java.util.Set;
 public class ShoppingListController {
     private final ShoppingListService shoppingListService;
     private final ProductService productService;
-
     private final ProductMapper productMapper;
 
     @PostMapping("save")
-    public void addShoppingList(@RequestBody Set<Object> objects){
+    public void addShoppingList(@RequestBody List<Object> objects){
         System.out.println("cmz");
         List<Product> productList=new ArrayList<>();
         JSONArray jsonArray=new JSONArray(objects);
         for(int i=0;i<jsonArray.length();i++){
             productList.add(productService
-                    .getProductById((String)((JSONObject)jsonArray
-                            .get(i)).get("id")));
+                    .getProductByName((String)((JSONObject)jsonArray
+                            .get(i)).get("name")));
         }
         ShoppingList shoppingList=new ShoppingList(productList);
         shoppingListService.addShoppingList(shoppingList);
@@ -46,7 +45,11 @@ public class ShoppingListController {
     @GetMapping("get")
     public List<ProductDTO> getShoppingList(){
         List<ShoppingList> shoppingLists=shoppingListService.getShoppingList();
-        return productMapper.toListProductDTO(shoppingLists.get(shoppingLists.size()-1).getProductList());
+        int size=shoppingLists.size()-1;
+        if(size==-1){
+            size=0;
+        }
+        return productMapper.toListProductDTO(shoppingLists.get(size).getProductList());
     }
 
     @PutMapping("client")

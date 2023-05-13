@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/home_page.dart';
+import 'package:frontend/pages/gridcart.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CartPage extends StatelessWidget {
@@ -106,13 +107,15 @@ class CartPage extends StatelessWidget {
                     '< Back to all categories',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
-                      fontSize: 11,
+                      fontSize: 20,
                       color: const Color(0xFF393D50),
                     ),
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/cart'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/cart');
+                  },
                   child: Text(
                     'Go to cart >',
                     style: GoogleFonts.buenard(

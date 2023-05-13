@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/categories_page.dart';
 import 'package:frontend/pages/gridcart.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+bool shoppingList=false;
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  Future<void> _addToShoppingList() async {
+    final http.Response response;
+    response = await http.post(
+      Uri.parse('http://localhost:8082/shoppingList/save'),
+      body: jsonEncode(favoriteProducts.map((product) => product.toMap()).toList()),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+      },
+    );
+    print(response);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +90,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10),
+                            padding: const EdgeInsets.only(left: 10),
                             child: TextFormField(
                               decoration: InputDecoration(
                                 hintText: 'Search here...',
@@ -107,18 +127,26 @@ class HomePage extends StatelessWidget {
                     '< Back to all categories',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
-                      fontSize: 11,
+                      fontSize: 20,
                       color: const Color(0xFF393D50),
                     ),
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/cart'),
+                  onTap: () {
+                    shoppingList=true;
+                    print(favoriteProducts);
+                    _addToShoppingList();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CategoriesPage()),
+                    );
+                  },
                   child: Text(
                     'Go to cart >',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
-                      fontSize: 11,
+                      fontSize: 20,
                       color: const Color(0xFF393D50),
                     ),
                   ),
