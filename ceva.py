@@ -137,14 +137,14 @@ ax.imshow(grid, cmap=cmap)
 
 # Plot the nodes
 for node in nodes:
-    ax.scatter(node[1], node[0], marker="*", color="blue", s=2000)
+    ax.scatter(node[1], node[0], marker="o", color="blue", s=2000)
 
 # Plot the start and goal points
-ax.scatter(start[1], start[0], marker="*", color="red", s=2000)
-ax.scatter(goal[1], goal[0], marker="*", color="green", s=2000)
+ax.scatter(start[1], start[0], marker="o", color="red", s=2000)
+ax.scatter(goal[1], goal[0], marker="o", color="green", s=2000)
 
 # Plot the path
-ax.plot(y_coords, x_coords, color="black", marker=">")
+ax.plot(y_coords, x_coords, color="black", linewidth=5)
 
 from io import BytesIO
 
@@ -152,7 +152,7 @@ fs = GridFS(mydb)
 
 # Define the arrow object outside of the loop
 for i in range(len(path) - 1):
-    arrow1 = arrow(path[i][1], path[i][0], path[i+1][1] - path[i][1], path[i+1][0] - path[i][0], width=0.1, color='red')
+    arrow1 = arrow(path[i][1], path[i][0], path[i+1][1] - path[i][1], path[i+1][0] - path[i][0], width=0.1, color='red', zorder=2)
     filename = 'file' + str(i) + '.png'
     img_data = BytesIO()
     plt.savefig(img_data, format='png')
