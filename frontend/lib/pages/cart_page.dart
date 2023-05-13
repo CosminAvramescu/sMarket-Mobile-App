@@ -20,8 +20,7 @@ class CartPage extends StatelessWidget {
         'Accept': '*/*',
       },
     );
-    products = jsonDecode(response.body) as List<dynamic>;
-    print("products");
+    GridCartState("singleton").update(jsonDecode(response.body) as List<dynamic>);
   }
 
   @override
@@ -105,7 +104,7 @@ class CartPage extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print("here products")
+                            print("here products");
                             _getProductsSearched(ctrl.text);
                           },
                           child: const Padding(
