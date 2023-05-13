@@ -39,73 +39,49 @@ grid = np.array([
 start = (14, 7)
 goal = (0, 14)
 
-def line_intersects(a1, a2, b1, b2):
-    def ccw(a, b, c):
-        return (c[1]-a[1])*(b[0]-a[0]) > (b[1]-a[1])*(c[0]-a[0])
+# def line_intersects(a1, a2, b1, b2):
+#     def ccw(a, b, c):
+#         return (c[1]-a[1])*(b[0]-a[0]) > (b[1]-a[1])*(c[0]-a[0])
 
-    # Check if line segments a1-a2 and b1-b2 intersect
-    if ccw(a1, b1, b2) != ccw(a2, b1, b2) and ccw(a1, a2, b1) != ccw(a1, a2, b2):
-        # Check if the line segment intersects with any non-zero positions in the grid
-        for i in range(min(a1[0], a2[0]), max(a1[0], a2[0]) + 1):
-            for j in range(min(a1[1], a2[1]), max(a1[1], a2[1]) + 1):
-                if grid[i][j] != 0 and ccw((i,j), b1, b2) != ccw((i,j), a2, a1):
-                    return True
-        return False
-    else:
-        return False
+#     # Check if line segments a1-a2 and b1-b2 intersect
+#     if ccw(a1, b1, b2) != ccw(a2, b1, b2) and ccw(a1, a2, b1) != ccw(a1, a2, b2):
+#         # Check if the line segment intersects with any non-zero positions in the grid
+#         for i in range(min(a1[0], a2[0]), max(a1[0], a2[0]) + 1):
+#             for j in range(min(a1[1], a2[1]), max(a1[1], a2[1]) + 1):
+#                 if grid[i][j] != 0 and ccw((i,j), b1, b2) != ccw((i,j), a2, a1):
+#                     return True
+#         return False
+#     else:
+#         return False
 
 def euclidean_distance(a, b):
     return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
 
+# nearest neighbor algorithm
 def find_path(nodes, start, end):
-    nodes_sorted_start = sorted(nodes, key=lambda node: euclidean_distance(node, start))
-    nodes_sorted_end = sorted(nodes, key=lambda node: euclidean_distance(node, end))
+    # Initialize path with start node
+    path = [start]
 
-    # Find path starting from start
-    path_start = [start]
-    for node in nodes_sorted_start:
-        path_start.append(node)
-        valid_path = True
-        for i in range(len(path_start) - 2):
-            for j in range(i + 2, len(path_start)):
-                if line_intersects(path_start[i], path_start[i+1], path_start[j-1], path_start[j]):
-                    valid_path = False
-                    break
-            if not valid_path:
-                break
-        if not valid_path:
-            path_start.pop()
-        else:
-            if path_start[-1] == end:
-                break
+    # Initialize set of unvisited nodes
+    unvisited = set(nodes)
 
-    # Find path starting from end
-    path_end = [end]
-    for node in nodes_sorted_end:
-        path_end.append(node)
-        valid_path = True
-        for i in range(len(path_end) - 2):
-            for j in range(i + 2, len(path_end)):
-                if line_intersects(path_end[i], path_end[i+1], path_end[j-1], path_end[j]):
-                    valid_path = False
-                    break
-            if not valid_path:
-                break
-        if not valid_path:
-            path_end.pop()
-        else:
-            if path_end[-1] == start:
-                break
+    # Repeat until all nodes have been visited
+    while unvisited:
+        # Find the nearest unvisited node to the current node
+        current_node = path[-1]
+        nearest_node = min(unvisited, key=lambda node: euclidean_distance(current_node, node))
 
-    # Combine paths
-    path_start.pop(0)  # Remove start node from path_start
-    path_end.pop(0)  # Remove end node from path_end
-    path = path_start + path_end[::-1]
+        # Add the nearest node to the path and remove it from the set of unvisited nodes
+        path.append(nearest_node)
+        unvisited.remove(nearest_node)
+
+    # Add end node to path
+    path.append(end)
 
     return path
 
 # Find the paths between the nodes
-nodes = [(10, 4), (12, 5), (4, 11), (4, 3), (8, 5), (14, 7), (2, 11), (0, 14)]
+nodes = [(10, 4), (7, 10), (12, 5), (6, 3), (5, 7), (4, 11), (10, 0), (2, 11), (8, 0)]
 path = find_path(nodes, start, goal)
 
 # Print the paths
