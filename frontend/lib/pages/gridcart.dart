@@ -29,9 +29,9 @@ class FavoriteProduct {
 
 var all = false;
 List<FavoriteProduct> favoriteProducts = [];
+List<dynamic>? products;
 
 class _GridCartState extends State<GridCart> {
-  List<dynamic>? _products;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _GridCartState extends State<GridCart> {
     final response;
     if (all == false && category != null) {
       response = await http.get(
-        Uri.parse('http://localhost:8082/category/getByCategory/${category}'),
+        Uri.parse('https://smarket-app.herokuapp.com/category/getByCategory/${category}'),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -54,7 +54,7 @@ class _GridCartState extends State<GridCart> {
       );
     } else {
       response = await http.get(
-        Uri.parse('http://localhost:8082/product/getAllProducts'),
+        Uri.parse('https://smarket-app.herokuapp.com/product/getAllProducts'),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -67,7 +67,7 @@ class _GridCartState extends State<GridCart> {
     }
     if (response.statusCode == 200) {
       setState(() {
-        _products = jsonDecode(response.body) as List<dynamic>;
+        products = jsonDecode(response.body) as List<dynamic>;
       });
     } else {
       throw Exception('Failed to fetch products from backend API');
@@ -98,14 +98,14 @@ class _GridCartState extends State<GridCart> {
 
   @override
   Widget build(BuildContext context) {
-    return _products == null
+    return products == null
         ? const Center(child: CircularProgressIndicator())
         : GridView.count(
             childAspectRatio: 0.80,
             crossAxisCount: 2,
             padding: const EdgeInsets.all(10),
             children: [
-              for (int i = 0; i < _products!.length; i++)
+              for (int i = 0; i < products!.length; i++)
                 GestureDetector(
                   onTap: () {
                     // Callback function to be executed on tap
@@ -126,11 +126,11 @@ class _GridCartState extends State<GridCart> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                _toggleFavoriteProduct(_products![i]['name'],
-                                    _products![i]['imageLink']);
+                                _toggleFavoriteProduct(products![i]['name'],
+                                    products![i]['imageLink']);
                               },
                               icon: Icon(
-                                _isProductFavorite(_products![i]['name'])
+                                _isProductFavorite(products![i]['name'])
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 color: Colors.red,
@@ -143,7 +143,7 @@ class _GridCartState extends State<GridCart> {
                           child: Container(
                             margin: const EdgeInsets.all(10),
                             child: Image.network(
-                              "${_products![i]['imageLink']}",
+                              "${products![i]['imageLink']}",
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -152,7 +152,7 @@ class _GridCartState extends State<GridCart> {
                           padding: const EdgeInsets.only(bottom: 1),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "${_products![i]['name']}",
+                            "${products![i]['name']}",
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 10,
@@ -166,7 +166,7 @@ class _GridCartState extends State<GridCart> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${_products![i]['price']}",
+                                "${products![i]['price']}",
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

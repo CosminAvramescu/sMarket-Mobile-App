@@ -2,9 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/home_page.dart';
 import 'package:frontend/pages/gridcart.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CartPage extends StatelessWidget {
-  const CartPage({Key? key}) : super(key: key);
+  CartPage({Key? key}) : super(key: key);
+  TextEditingController ctrl = TextEditingController();
+
+  void _getProductsSearched(String name) async {
+    var response = await http.get(
+      Uri.parse('https://smarket-app.herokuapp.com/product/search/${name}'),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+      },
+    );
+    products = jsonDecode(response.body) as List<dynamic>;
+    print("products");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +90,9 @@ class CartPage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: TextFormField(
+                              controller: ctrl,
                               decoration: InputDecoration(
-                                hintText: 'Search here...',
+                                hintText: 'Search product here...',
                                 hintStyle: GoogleFonts.buenard(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
@@ -84,9 +103,15 @@ class CartPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Icon(Icons.search),
+                        GestureDetector(
+                          onTap: () {
+                            print("here products")
+                            _getProductsSearched(ctrl.text);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Icon(Icons.search),
+                          ),
                         ),
                       ],
                     ),

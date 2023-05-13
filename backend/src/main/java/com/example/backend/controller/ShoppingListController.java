@@ -44,7 +44,10 @@ public class ShoppingListController {
 
     @GetMapping("get")
     public List<ProductDTO> getShoppingList(){
-        List<ShoppingList> shoppingLists=shoppingListService.getShoppingList();
+        List<ShoppingList> shoppingLists;
+        while((shoppingLists=shoppingListService.getShoppingList()).size()==0){
+
+        }
         int size=shoppingLists.size()-1;
         if(size==-1){
             size=0;
