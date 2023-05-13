@@ -140,8 +140,8 @@ for node in nodes:
     ax.scatter(node[1], node[0], marker="*", color="blue", s=2000)
 
 # Plot the start and goal points
-ax.scatter(start[1], start[0], marker="*", color="red", s=200)
-ax.scatter(goal[1], goal[0], marker="*", color="green", s=200)
+ax.scatter(start[1], start[0], marker="*", color="red", s=2000)
+ax.scatter(goal[1], goal[0], marker="*", color="green", s=2000)
 
 # Plot the path
 ax.plot(y_coords, x_coords, color="black", marker=">")
