@@ -6,14 +6,22 @@ myclient = MongoClient("mongodb+srv://andreinapruiu:xLOLaVRwqWOA2DUt@cluster0.dw
 mydb = myclient["smarket-api-db"]
 fs = GridFS(mydb)
 
-filename = "file"
-file_id = fs.find_one({"filename": filename})._id
-file = fs.get(file_id)
+# Get a list of all the files in the database
+files = fs.find()
 
-# Specify the path to save the file
-path_to_save = "./" + filename + ".png"
+# Iterate over the files and download each one
+for file in files:
+    filename = file.filename
+    file_id = file._id
+    file = fs.get(file_id)
 
-with open(path_to_save, "wb") as f:
-    f.write(file.read())
+    # Specify the path to save the file
+    path_to_save = "./" + filename
 
-print(f"File {filename} was downloaded successfully at {os.path.abspath(path_to_save)}")
+    with open(path_to_save, "wb") as f:
+        f.write(file.read())
+
+    print(f"File {filename} was downloaded successfully at {os.path.abspath(path_to_save)}")
+    
+    fs.delete(file_id)
+    print(f"File {filename} was deleted from the database")
