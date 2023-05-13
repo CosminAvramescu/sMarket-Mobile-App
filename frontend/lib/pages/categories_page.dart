@@ -3,9 +3,27 @@ import 'package:frontend/pages/gridcart.dart';
 import 'package:frontend/pages/gridcategories.dart';
 import 'package:frontend/pages/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CategoriesPage extends StatelessWidget {
   CategoriesPage({super.key});
+  TextEditingController ctrl = TextEditingController();
+
+  void _getProductsSearched(String name) async {
+     var response = await http.get(
+      Uri.parse('https://smarket-app.herokuapp.com/product/search/${name}'),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+      },
+    );
+     products = jsonDecode(response.body) as List<dynamic>;
+     print(products);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +91,9 @@ class CategoriesPage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: TextFormField(
+                              controller: ctrl,
                               decoration: InputDecoration(
-                                hintText: 'Search here...',
+                                hintText: 'Search product here...',
                                 hintStyle: GoogleFonts.buenard(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
@@ -85,9 +104,15 @@ class CategoriesPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Icon(Icons.search),
+                        GestureDetector(
+                          onTap: () {
+                            print("here categories");
+                            //_getProductsSearched(ctrl.text);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Icon(Icons.search),
+                          ),
                         ),
                       ],
                     ),
@@ -108,7 +133,9 @@ class CategoriesPage extends StatelessWidget {
                       ? [
                     Center(
                       child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: Text(
                           'Your cart: ${favoriteProducts.length} items',
                           style: GoogleFonts.buenard(
@@ -137,10 +164,15 @@ class CategoriesPage extends StatelessWidget {
                     // Set all variables to true
                     all = true;
                     // Navigate to HomePage
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
+                    if(shoppingList==false){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomePage()),
+                      );
+                    }
+                    else{
+
+                    }
                   },
                   child: Text(
                     shoppingList == true ? 'Go to map >' : 'Go to all products >',

@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   Future<void> _addToShoppingList() async {
     final http.Response response;
     response = await http.post(
-      Uri.parse('http://localhost:8082/shoppingList/save'),
+      Uri.parse('https://smarket-app.herokuapp.com/shoppingList/save'),
       body: jsonEncode(favoriteProducts.map((product) => product.toMap()).toList()),
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -23,6 +23,7 @@ class HomePage extends StatelessWidget {
         'Accept': '*/*',
       },
     );
+    favoriteProducts=[];
     print(response);
   }
 
@@ -135,8 +136,8 @@ class HomePage extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     shoppingList=true;
-                    print(favoriteProducts);
                     _addToShoppingList();
+                    print(favoriteProducts);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => CategoriesPage()),

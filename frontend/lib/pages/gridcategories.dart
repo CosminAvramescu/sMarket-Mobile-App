@@ -18,7 +18,7 @@ class _GridCategoriesState extends State<GridCategories> {
   Future<List<dynamic>> _fetchProducts() async {
     if(shoppingList==false){
       final response = await http.get(
-        Uri.parse('http://localhost:8082/category/getAll'),
+        Uri.parse('https://smarket-app.herokuapp.com/category/getAll'),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -35,7 +35,7 @@ class _GridCategoriesState extends State<GridCategories> {
     }
     else{
       final response = await http.get(
-        Uri.parse('http://localhost:8082/shoppingList/get'),
+        Uri.parse('https://smarket-app.herokuapp.com/shoppingList/get'),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -44,6 +44,7 @@ class _GridCategoriesState extends State<GridCategories> {
           'Accept': '*/*',
         },
       );
+      shoppingList=false;
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as List<dynamic>;
       } else {
@@ -68,7 +69,7 @@ class _GridCategoriesState extends State<GridCategories> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
-      future: _futureCategories,
+      future: _fetchProducts(),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(

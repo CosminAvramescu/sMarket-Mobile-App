@@ -48,6 +48,12 @@ public class ProductController {
         }
     }
 
+    @GetMapping("search/{name}")
+    public List<ProductDTO> searchProducts(@PathVariable String name){
+        System.out.println("cnz");
+        return productMapper.toListProductDTO(productService.searchProducts(name));
+    }
+
     @GetMapping("getAllProducts")
     public List<ProductDTO> getAllProducts(){
         return productMapper.toListProductDTO(productService.getAllProducts());

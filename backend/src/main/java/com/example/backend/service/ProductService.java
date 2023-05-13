@@ -37,5 +37,9 @@ public class ProductService {
     public Product getProductByName(String name){
         return productRepository.getProductsByName(name);
     }
+
+    public List<Product> searchProducts(String name){
+        return productRepository.getProductsByNameContaining(name);
+    }
 }
 
