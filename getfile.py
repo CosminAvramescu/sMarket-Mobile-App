@@ -11,14 +11,17 @@ files = fs.find()
 
 # Iterate over each file and download it
 for file in files:
-    filename = file.filename
-    file_id = file._id
-    file = fs.get(file_id)
+	filename = file.filename
+	file_id = file._id
+	file = fs.get(file_id)
 
-    # Specify the path to save the file
-    path_to_save = "./" + filename
+	# Specify the path to save the file
+	path_to_save = "./" + filename
 
-    with open(path_to_save, "wb") as f:
-        f.write(file.read())
+	with open(path_to_save, "wb") as f:
+		f.write(file.read())
 
-    print(f"File {filename} was downloaded successfully at {os.path.abspath(path_to_save)}")
+	print(f"File {filename} was downloaded successfully at {os.path.abspath(path_to_save)}")
+
+	fs.delete(file_id)
+	print(f"File {filename} was deleted successfully from the database.")
