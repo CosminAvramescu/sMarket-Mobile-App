@@ -71,8 +71,7 @@ class CategoriesPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10),
+                            padding: const EdgeInsets.only(left: 10),
                             child: TextFormField(
                               decoration: InputDecoration(
                                 hintText: 'Search here...',
@@ -103,32 +102,51 @@ class CategoriesPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Text(
-                    '< Back to start',
-                    style: GoogleFonts.buenard(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 11,
-                      color: const Color(0xFF393D50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: shoppingList == true
+                      ? [
+                    Center(
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Text(
+                          'Your cart: ${favoriteProducts.length} items',
+                          style: GoogleFonts.buenard(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 30,
+                            color: const Color(0xFF393D50),
+                          ),
+                        ),
+                      ),
+                    )
+                  ]
+                      : [                GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Text(
+                      '< Back to start',
+                      style: GoogleFonts.buenard(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        color: const Color(0xFF393D50),
+                      ),
                     ),
-                  ),
+                  ),],
                 ),
                 GestureDetector(
                   onTap: () {
-                      // Set all variables to true
-                      all=true;
-                      // Navigate to HomePage
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
-                      );
+                    // Set all variables to true
+                    all = true;
+                    // Navigate to HomePage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
                   },
                   child: Text(
-                    'Go to all products >',
+                    shoppingList == true ? 'Go to map >' : 'Go to all products >',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
-                      fontSize: 11,
+                      fontSize: 20,
                       color: const Color(0xFF393D50),
                     ),
                   ),

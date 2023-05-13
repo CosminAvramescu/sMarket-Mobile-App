@@ -16,20 +16,39 @@ class _GridCategoriesState extends State<GridCategories> {
   late Future<List<dynamic>> _futureCategories;
 
   Future<List<dynamic>> _fetchProducts() async {
-    final response = await http.get(
-      Uri.parse('http://localhost:8082/category/getAll'),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-        'Accept': '*/*',
-      },
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body) as List<dynamic>;
-    } else {
-      throw Exception('Failed to fetch products from backend API');
+    if(shoppingList==false){
+      final response = await http.get(
+        Uri.parse('http://localhost:8082/category/getAll'),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+        },
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body) as List<dynamic>;
+      } else {
+        throw Exception('Failed to fetch products from backend API');
+      }
+    }
+    else{
+      final response = await http.get(
+        Uri.parse('http://localhost:8082/shoppingList/get'),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+        },
+      );
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body) as List<dynamic>;
+      } else {
+        throw Exception('Failed to fetch products from backend API');
+      }
     }
   }
 

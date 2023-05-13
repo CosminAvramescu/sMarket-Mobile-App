@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/intro_page.dart';
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 void main() => runApp(const MyApp());
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
