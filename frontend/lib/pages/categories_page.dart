@@ -6,8 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
 class CategoriesPage extends StatelessWidget {
-  CategoriesPage({super.key});
+  CategoriesPage({Key? key}) : super(key: key);
   TextEditingController ctrl = TextEditingController();
 
   void _getProductsSearched(String name) async {
@@ -21,8 +22,7 @@ class CategoriesPage extends StatelessWidget {
         'Accept': '*/*',
       },
     );
-     products = jsonDecode(response.body) as List<dynamic>;
-     print(products);
+     GridCartState("singleton").update(jsonDecode(response.body) as List<dynamic>);
   }
 
   @override
@@ -107,7 +107,7 @@ class CategoriesPage extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             print("here categories");
-                            //_getProductsSearched(ctrl.text);
+                            _getProductsSearched(ctrl.text);
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -134,6 +134,7 @@ class CategoriesPage extends StatelessWidget {
                     Center(
                       child: GestureDetector(
                         onTap: () {
+                          Navigator.pop(context);
                           Navigator.pop(context);
                         },
                         child: Text(
@@ -167,7 +168,7 @@ class CategoriesPage extends StatelessWidget {
                     if(shoppingList==false){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
+                        MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     }
                     else{
