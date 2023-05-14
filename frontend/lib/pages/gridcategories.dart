@@ -3,7 +3,7 @@ import 'package:frontend/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-var category, categoryTapped=false;
+var category, categoryTapped = false;
 
 class GridCategories extends StatefulWidget {
   const GridCategories({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _GridCategoriesState extends State<GridCategories> {
   late Future<List<dynamic>> _futureCategories;
 
   Future<List<dynamic>> _fetchProducts() async {
-    if(shoppingList==false){
+    if (shoppingList == false) {
       final response = await http.get(
         Uri.parse('https://smarket-app.herokuapp.com/category/getAll'),
         headers: {
@@ -32,8 +32,7 @@ class _GridCategoriesState extends State<GridCategories> {
       } else {
         throw Exception('Failed to fetch products from backend API');
       }
-    }
-    else{
+    } else {
       final response = await http.get(
         Uri.parse('https://smarket-app.herokuapp.com/shoppingList/get'),
         headers: {
@@ -44,7 +43,7 @@ class _GridCategoriesState extends State<GridCategories> {
           'Accept': '*/*',
         },
       );
-      shoppingList=false;
+      shoppingList = false;
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as List<dynamic>;
       } else {
@@ -56,7 +55,6 @@ class _GridCategoriesState extends State<GridCategories> {
   void _onCategoryTap(String categoryName) {
     setState(() {
       category = categoryName;
-
     });
   }
 
@@ -76,7 +74,7 @@ class _GridCategoriesState extends State<GridCategories> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
-          return Center(
+          return const Center(
             child: Text('Failed to fetch categories'),
           );
         } else {
@@ -97,9 +95,9 @@ class _GridCategoriesState extends State<GridCategories> {
                   },
                   child: Container(
                     padding:
-                    const EdgeInsets.only(left: 15, right: 15, top: 10),
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 8, horizontal: 10),
+                        const EdgeInsets.only(left: 15, right: 15, top: 10),
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),

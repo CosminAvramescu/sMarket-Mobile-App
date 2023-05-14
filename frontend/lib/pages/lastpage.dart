@@ -1,28 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/home_page.dart';
-import 'package:frontend/pages/gridcart.dart';
+import 'package:frontend/pages/gridcard2.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class CartPage extends StatelessWidget {
-  CartPage({Key? key}) : super(key: key);
-  TextEditingController ctrl = TextEditingController();
-
-  void _getProductsSearched(String name) async {
-    var response = await http.get(
-      Uri.parse('https://smarket-app.herokuapp.com/product/search/${name}'),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-        'Accept': '*/*',
-      },
-    );
-    products = jsonDecode(response.body) as List<dynamic>;
-    print("products");
-  }
+class LastPage extends StatelessWidget {
+  const LastPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +57,7 @@ class CartPage extends StatelessWidget {
               children: [
                 Positioned(
                   left: MediaQuery.of(context).size.width / 2 - 278 / 2,
-                  top: 40,
+                  top: 20,
                   child: Container(
                     width: 278,
                     height: 33,
@@ -88,11 +69,11 @@ class CartPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.only(
+                                left: 10, top: 10, bottom: 0),
                             child: TextFormField(
-                              controller: ctrl,
                               decoration: InputDecoration(
-                                hintText: 'Search product here...',
+                                hintText: 'Search here...',
                                 hintStyle: GoogleFonts.buenard(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
@@ -103,15 +84,9 @@ class CartPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            print("here products");
-                            _getProductsSearched(ctrl.text);
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Icon(Icons.search),
-                          ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Icon(Icons.search),
                         ),
                       ],
                     ),
@@ -132,19 +107,6 @@ class CartPage extends StatelessWidget {
                     '< Back to all categories',
                     style: GoogleFonts.buenard(
                       fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                      color: const Color(0xFF393D50),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/cart');
-                  },
-                  child: Text(
-                    'Go to cart >',
-                    style: GoogleFonts.buenard(
-                      fontWeight: FontWeight.w400,
                       fontSize: 11,
                       color: const Color(0xFF393D50),
                     ),
@@ -153,6 +115,7 @@ class CartPage extends StatelessWidget {
               ],
             ),
           ),
+          const Expanded(child: GridCard2())
         ],
       ),
       drawer: Drawer(

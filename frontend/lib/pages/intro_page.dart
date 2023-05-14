@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/categories_page.dart';
 import 'package:frontend/pages/home_page.dart';
+import 'package:frontend/pages/lastpage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class IntroPage extends StatelessWidget {
@@ -80,9 +81,7 @@ class IntroPage extends StatelessWidget {
               " Your minutes are gold, s'Market\n                 is here to hold",
               textAlign: TextAlign.justify,
               style: GoogleFonts.montserrat(
-                fontSize: 20,
-                color: Colors.deepOrangeAccent
-              ),
+                  fontSize: 20, color: Colors.deepOrangeAccent),
             ),
           ),
 
@@ -92,7 +91,7 @@ class IntroPage extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CategoriesPage()),
+              MaterialPageRoute(builder: (context) => LastPage()),
             ),
             child: Container(
               padding:

@@ -17,14 +17,14 @@ class FavoriteProduct {
   FavoriteProduct(this.name, this.imageLink);
 
   @override
-  String toString(){
+  String toString() {
     return "$name $imageLink";
   }
 
   Map<String, dynamic> toMap() => {
-    'name': name,
-    'imageLink': imageLink,
-  };
+        'name': name,
+        'imageLink': imageLink,
+      };
 }
 
 var all = false;
@@ -32,7 +32,6 @@ List<FavoriteProduct> favoriteProducts = [];
 List<dynamic>? products;
 
 class _GridCartState extends State<GridCart> {
-
   @override
   void initState() {
     super.initState();
@@ -43,7 +42,8 @@ class _GridCartState extends State<GridCart> {
     final response;
     if (all == false && category != null) {
       response = await http.get(
-        Uri.parse('https://smarket-app.herokuapp.com/category/getByCategory/${category}'),
+        Uri.parse(
+            'https://smarket-app.herokuapp.com/category/getByCategory/${category}'),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -101,7 +101,7 @@ class _GridCartState extends State<GridCart> {
     return products == null
         ? const Center(child: CircularProgressIndicator())
         : GridView.count(
-            childAspectRatio: 0.80,
+            childAspectRatio: 0.75,
             crossAxisCount: 2,
             padding: const EdgeInsets.all(10),
             children: [
