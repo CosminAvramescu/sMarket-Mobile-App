@@ -7,7 +7,7 @@ class GridCart extends StatefulWidget {
   const GridCart({Key? key}) : super(key: key);
 
   @override
-  GridCartState createState() => GridCartState("gridcart");
+  _GridCartState createState() => _GridCartState();
 }
 
 class FavoriteProduct {
@@ -31,40 +31,12 @@ var all = false;
 List<FavoriteProduct> favoriteProducts = [];
 List<dynamic>? products;
 
-class GridCartState extends State<GridCart> {
-  static GridCartState? _instance;
-
-  GridCartState._internal();
-
-  factory GridCartState(String caller) {
-    if (caller == "gridcart") {
-      return _instance=GridCartState._internal();
-    } else {
-      _instance ??= GridCartState._internal();
-      return _instance!;
-    }
-  }
+class _GridCartState extends State<GridCart> {
 
   @override
   void initState() {
     super.initState();
     _fetchProducts();
-  }
-
-  void update(List<dynamic> p){
-    if(mounted){
-      setState(() {
-        products = p;
-      });
-    }
-  }
-
-  void updateFav(List<dynamic> p){
-    if(mounted){
-      setState(() {
-        favoriteProducts = [];
-      });
-    }
   }
 
   Future<void> _fetchProducts() async {

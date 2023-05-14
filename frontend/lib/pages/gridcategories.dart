@@ -13,6 +13,8 @@ class GridCategories extends StatefulWidget {
 }
 
 class _GridCategoriesState extends State<GridCategories> {
+  late Future<List<dynamic>> _futureCategories;
+
   Future<List<dynamic>> _fetchProducts() async {
     if(shoppingList==false){
       final response = await http.get(
@@ -61,6 +63,7 @@ class _GridCategoriesState extends State<GridCategories> {
   @override
   void initState() {
     super.initState();
+    _futureCategories = _fetchProducts();
   }
 
   @override

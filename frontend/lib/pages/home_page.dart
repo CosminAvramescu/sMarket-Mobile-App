@@ -8,8 +8,7 @@ import 'dart:convert';
 bool shoppingList=false;
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-  TextEditingController ctrl = TextEditingController();
+  const HomePage({Key? key}) : super(key: key);
 
   Future<void> _addToShoppingList() async {
     final http.Response response;
@@ -24,21 +23,8 @@ class HomePage extends StatelessWidget {
         'Accept': '*/*',
       },
     );
+    favoriteProducts=[];
     print(response);
-  }
-
-  void _getProductsSearched(String name) async {
-    var response = await http.get(
-      Uri.parse('https://smarket-app.herokuapp.com/product/search/${name}'),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json',
-        'Accept': '*/*',
-      },
-    );
-    GridCartState("singleton").update(jsonDecode(response.body) as List<dynamic>);
   }
 
   @override
@@ -107,9 +93,8 @@ class HomePage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: TextFormField(
-                              controller: ctrl,
                               decoration: InputDecoration(
-                                hintText: 'Search product here...',
+                                hintText: 'Search here...',
                                 hintStyle: GoogleFonts.buenard(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
@@ -120,15 +105,9 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            print("here categories");
-                            _getProductsSearched(ctrl.text);
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Icon(Icons.search),
-                          ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Icon(Icons.search),
                         ),
                       ],
                     ),
@@ -144,10 +123,7 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    GridCartState("singleton").update([]);
-                    Navigator.pop(context);
-          } ,
+                  onTap: () => Navigator.pop(context),
                   child: Text(
                     '< Back to all categories',
                     style: GoogleFonts.buenard(
@@ -161,7 +137,7 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     shoppingList=true;
                     _addToShoppingList();
-                    GridCartState("singleton").update([]);
+                    print(favoriteProducts);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => CategoriesPage()),
