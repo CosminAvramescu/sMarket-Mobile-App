@@ -129,7 +129,7 @@ class GridCartState extends State<GridCart> {
     return products == null
         ? const Center(child: CircularProgressIndicator())
         : GridView.count(
-      childAspectRatio: 0.80,
+      childAspectRatio: 0.70,
       crossAxisCount: 2,
       padding: const EdgeInsets.all(10),
       children: [
@@ -176,33 +176,33 @@ class GridCartState extends State<GridCart> {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 1),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${products![i]['name']}",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.black,
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "${products![i]['name']}",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "${products![i]['price']}",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                          ),
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 10, top: 10),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "${products![i]['price']}",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
                         ),
-                        // add more widgets here
-                      ],
+                      ),
                     ),
                   ),
                 ],

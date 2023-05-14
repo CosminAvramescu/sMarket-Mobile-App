@@ -47,7 +47,7 @@ class GridCard2 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  shoppingList[i]['name'],
+                                  "${i+1}) ${shoppingList[i]['name']}",
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
