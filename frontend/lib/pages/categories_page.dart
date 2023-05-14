@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/gridcart.dart';
 import 'package:frontend/pages/gridcategories.dart';
 import 'package:frontend/pages/home_page.dart';
+import 'package:frontend/pages/lastpage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'gridcard2.dart';
 
 class CategoriesPage extends StatelessWidget {
-  CategoriesPage({Key? key}) : super(key: key);
+  CategoriesPage({super.key});
   TextEditingController ctrl = TextEditingController();
 
   void _getProductsSearched(String name) async {
@@ -22,7 +24,8 @@ class CategoriesPage extends StatelessWidget {
         'Accept': '*/*',
       },
     );
-     GridCartState("singleton").update(jsonDecode(response.body) as List<dynamic>);
+     products = jsonDecode(response.body) as List<dynamic>;
+     print(products);
   }
 
   @override
@@ -107,7 +110,7 @@ class CategoriesPage extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             print("here categories");
-                            _getProductsSearched(ctrl.text);
+                            //_getProductsSearched(ctrl.text);
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -134,7 +137,6 @@ class CategoriesPage extends StatelessWidget {
                     Center(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
                           Navigator.pop(context);
                         },
                         child: Text(
@@ -165,14 +167,17 @@ class CategoriesPage extends StatelessWidget {
                     // Set all variables to true
                     all = true;
                     // Navigate to HomePage
-                    if(shoppingList==false){
+                    if(shoppingList==true){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => const HomePage()),
                       );
                     }
                     else{
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const GridCard2()),
+                      );
                     }
                   },
                   child: Text(
