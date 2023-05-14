@@ -98,13 +98,15 @@ for point in path:
 
 # Plot map and path
 fig, ax = plt.subplots(figsize=(20, 20))
-colors = ['#EDE5D8', '#C70039', '#FFC300', '#DAF7A6', '#EDE5D8']
+colors = ['#FFFFFF', '#E2EAEF', '#E2EAEF', '#E2EAEF', '#E2EAEF']
 cmap = matplotlib.colors.ListedColormap(colors)
 
 # Create a boundary around each non-zero square
 for i in range(grid.shape[0]):
     for j in range(grid.shape[1]):
         if grid[i, j] != 0:
+            text = str(grid[i, j])
+            ax.text(j, i, text, color='black', ha='center', va='center', fontsize=50, fontweight='bold')
             rect = plt.Rectangle((j - 0.5, i - 0.5), 1, 1, fill=False, edgecolor='black', lw=2)
             ax.add_patch(rect)
 
@@ -113,14 +115,14 @@ ax.imshow(grid, cmap=cmap)
 
 # Plot the nodes
 for node in nodes:
-    ax.scatter(node[1], node[0], marker="o", color="blue", s=2000)
+    ax.scatter(node[1], node[0], marker="o", color="#88B6A5", s=2000, zorder=10)
 
 # Plot the start and goal points
-ax.scatter(start[1], start[0], marker="o", color="red", s=2000)
-ax.scatter(goal[1], goal[0], marker="o", color="green", s=2000)
+ax.scatter(start[1], start[0], marker="o", color="#F56457", s=2000, zorder=10)
+ax.scatter(goal[1], goal[0], marker="o", color="green", s=2000, zorder=10)
 
 # Plot the path
-ax.plot(y_coords, x_coords, color="black", linewidth=5)
+ax.plot(y_coords, x_coords, color="#6979B2", linewidth=5)
 
 from io import BytesIO
 
@@ -128,7 +130,7 @@ fs = GridFS(mydb)
 
 # Define the arrow object outside of the loop
 for i in range(len(path) - 1):
-    arrow1 = arrow(path[i][1], path[i][0], path[i+1][1] - path[i][1], path[i+1][0] - path[i][0], width=0.1, color='red', zorder=2)
+    arrow1 = arrow(path[i][1], path[i][0], path[i+1][1] - path[i][1], path[i+1][0] - path[i][0], width=0.1, color='#F56457', zorder=11)
     filename = 'file' + str(i) + '.png'
     img_data = BytesIO()
     plt.savefig(img_data, format='png')
@@ -138,4 +140,3 @@ for i in range(len(path) - 1):
 
 
 plt.savefig('file.png')
-

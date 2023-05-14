@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/gridcart.dart';
 import 'package:frontend/pages/gridcategories.dart';
 import 'package:frontend/pages/home_page.dart';
+import 'package:frontend/pages/lastpage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'gridcard2.dart';
 
 class CategoriesPage extends StatelessWidget {
   CategoriesPage({super.key});
@@ -164,14 +167,17 @@ class CategoriesPage extends StatelessWidget {
                     // Set all variables to true
                     all = true;
                     // Navigate to HomePage
-                    if(shoppingList==false){
+                    if(shoppingList==true){
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const HomePage()),
                       );
                     }
                     else{
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const GridCard2()),
+                      );
                     }
                   },
                   child: Text(
