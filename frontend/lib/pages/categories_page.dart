@@ -176,7 +176,7 @@ class CategoriesPage extends StatelessWidget {
                     else{
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LastPage()),
+                        MaterialPageRoute(builder: (context) => shoppingList == true ? HomePage():const LastPage()),
                       );
                     }
                   },

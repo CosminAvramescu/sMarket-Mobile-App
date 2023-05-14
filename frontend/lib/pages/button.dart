@@ -30,8 +30,8 @@ class _ChangingButtonState extends State<ChangingButton> {
               height: 40,
               color: Colors.blue,
               child: Center(
-                child: Text(
-                  'Check',
+                child: const Text(
+                  'Got it',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

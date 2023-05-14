@@ -124,6 +124,10 @@ ax.imshow(grid, cmap=cmap)
 # Plot the nodes
 for node in nodes:
     ax.scatter(node[1], node[0], marker="o", color="#88B6A5", s=2000, zorder=10)
+    
+# Put numbers on the nodes from the path
+for i in range(len(path)):
+    ax.text(path[i][1], path[i][0], str(i), color="black", fontsize=25, ha="center", va="center", fontweight='bold', zorder=20)
 
 # Plot the start and goal points
 ax.scatter(start[1], start[0], marker="o", color="#F56457", s=2000, zorder=10)

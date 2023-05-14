@@ -129,7 +129,7 @@ class GridCartState extends State<GridCart> {
     return products == null
         ? const Center(child: CircularProgressIndicator())
         : GridView.count(
-      childAspectRatio: 0.80,
+      childAspectRatio: 0.70,
       crossAxisCount: 2,
       padding: const EdgeInsets.all(10),
       children: [
