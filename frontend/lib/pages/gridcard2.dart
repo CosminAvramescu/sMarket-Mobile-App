@@ -1,93 +1,112 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/button.dart';
 
 class GridCard2 extends StatelessWidget {
   const GridCard2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (int i = 1; i < 10; i++)
-          Container(
-            height: 110,
-            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadiusDirectional.circular(10),
-            ),
-            child: Row(
+    return FutureBuilder<List<dynamic>>(
+      future: fetchShoppingList(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final shoppingList = snapshot.data as List<dynamic>;
+          return SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
               children: [
-                Container(
-                  height: 70,
-                  width: 70,
-                  margin: EdgeInsets.only(right: 15),
-                  child: Image.asset('lib/images/cart1.png'),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Apa plata",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                for (int i = 0; i < shoppingList.length; i++)
+                  Container(
+                    height: 110,
+                    margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadiusDirectional.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 70,
+                          width: 70,
+                          margin: const EdgeInsets.only(right: 15),
+                          child: Image.network(
+                            "${shoppingList[i]['imageLink']}",
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "10 lei",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 10,
-                                  )
-                                ]),
-                            child: Icon(
-                              CupertinoIcons.minus,
-                              size: 18,
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  shoppingList[i]['name'],
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  shoppingList[i]['price'],
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
-                          )
-                        ],
-                      )
-                    ],
+                          ),
+                        ),
+                        //const Spacer(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ChangingButton(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
-          ),
-      ],
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
+  }
+}
+
+// Asynchronous function to fetch the shopping list
+Future<List<dynamic>> fetchShoppingList() async {
+  final response = await http.get(
+    Uri.parse('https://smarket-app.herokuapp.com/shoppingList/get'),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Content-Type': 'application/json',
+      'Accept': '*/*',
+    },
+  );
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body) as List<dynamic>;
+  } else {
+    throw Exception('Failed to fetch products from backend API');
   }
 }

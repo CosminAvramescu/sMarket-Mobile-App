@@ -7,7 +7,7 @@ class GridCart extends StatefulWidget {
   const GridCart({Key? key}) : super(key: key);
 
   @override
-  _GridCartState createState() => _GridCartState();
+  GridCartState createState() => GridCartState("gridcart");
 }
 
 class FavoriteProduct {
@@ -31,12 +31,40 @@ var all = false;
 List<FavoriteProduct> favoriteProducts = [];
 List<dynamic>? products;
 
-class _GridCartState extends State<GridCart> {
+class GridCartState extends State<GridCart> {
+  static GridCartState? _instance;
+
+  GridCartState._internal();
+
+  factory GridCartState(String caller) {
+    if (caller == "gridcart") {
+      return _instance=GridCartState._internal();
+    } else {
+      _instance ??= GridCartState._internal();
+      return _instance!;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _fetchProducts();
+  }
+
+  void update(List<dynamic> p){
+    if(mounted){
+      setState(() {
+        products = p;
+      });
+    }
+  }
+
+  void updateFav(List<dynamic> p){
+    if(mounted){
+      setState(() {
+        favoriteProducts = [];
+      });
+    }
   }
 
   Future<void> _fetchProducts() async {
@@ -101,87 +129,87 @@ class _GridCartState extends State<GridCart> {
     return products == null
         ? const Center(child: CircularProgressIndicator())
         : GridView.count(
-            childAspectRatio: 0.80,
-            crossAxisCount: 2,
-            padding: const EdgeInsets.all(10),
-            children: [
-              for (int i = 0; i < products!.length; i++)
-                GestureDetector(
-                  onTap: () {
-                    // Callback function to be executed on tap
-                  },
-                  child: Container(
-                    padding:
-                        const EdgeInsets.only(left: 15, right: 15, top: 10),
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
+      childAspectRatio: 0.80,
+      crossAxisCount: 2,
+      padding: const EdgeInsets.all(10),
+      children: [
+        for (int i = 0; i < products!.length; i++)
+          GestureDetector(
+            onTap: () {
+              // Callback function to be executed on tap
+            },
+            child: Container(
+              padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 10),
+              margin:
+              const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          _toggleFavoriteProduct(products![i]['name'],
+                              products![i]['imageLink']);
+                        },
+                        icon: Icon(
+                          _isProductFavorite(products![i]['name'])
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      child: Image.network(
+                        "${products![i]['imageLink']}",
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    child: Column(
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "${products![i]['name']}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                _toggleFavoriteProduct(products![i]['name'],
-                                    products![i]['imageLink']);
-                              },
-                              icon: Icon(
-                                _isProductFavorite(products![i]['name'])
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            margin: const EdgeInsets.all(10),
-                            child: Image.network(
-                              "${products![i]['imageLink']}",
-                              fit: BoxFit.cover,
-                            ),
+                        Text(
+                          "${products![i]['price']}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 1),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${products![i]['name']}",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "${products![i]['price']}",
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                              // add more widgets here
-                            ],
-                          ),
-                        ),
+                        // add more widgets here
                       ],
                     ),
                   ),
-                ),
-            ],
-          );
+                ],
+              ),
+            ),
+          ),
+      ],
+    );
   }
 }
