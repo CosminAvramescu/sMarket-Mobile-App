@@ -170,7 +170,7 @@ class CategoriesPage extends StatelessWidget {
                     if(shoppingList==true){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
+                        MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     }
                     else{
