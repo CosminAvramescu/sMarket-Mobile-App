@@ -12,6 +12,8 @@ class GridCategories extends StatefulWidget {
   _GridCategoriesState createState() => _GridCategoriesState();
 }
 
+List<dynamic> getShoppingList=[];
+
 class _GridCategoriesState extends State<GridCategories> {
   late Future<List<dynamic>> _futureCategories;
 
@@ -28,7 +30,9 @@ class _GridCategoriesState extends State<GridCategories> {
         },
       );
       if (response.statusCode == 200) {
-        return jsonDecode(response.body) as List<dynamic>;
+        getShoppingList=jsonDecode(response.body) as List<dynamic>;
+        print(getShoppingList);
+        return getShoppingList;
       } else {
         throw Exception('Failed to fetch products from backend API');
       }
@@ -82,7 +86,7 @@ class _GridCategoriesState extends State<GridCategories> {
         } else {
           final categories = snapshot.data!;
           return GridView.count(
-            childAspectRatio: 0.80,
+            childAspectRatio: 0.75,
             crossAxisCount: 2,
             padding: const EdgeInsets.all(10),
             children: [

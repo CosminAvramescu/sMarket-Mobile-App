@@ -176,7 +176,7 @@ class CategoriesPage extends StatelessWidget {
                     else{
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const GridCard2()),
+                        MaterialPageRoute(builder: (context) => LastPage()),
                       );
                     }
                   },
