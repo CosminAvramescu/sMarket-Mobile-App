@@ -119,7 +119,7 @@ class _GridCategoriesState extends State<GridCategories> {
                         ),
                         Container(
                           padding: const EdgeInsets.only(bottom: 1),
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.center,
                           child: Text(
                             "${categories[i]['name']}",
                             textAlign: TextAlign.center,
