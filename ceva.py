@@ -4,7 +4,7 @@ import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 import os
 from gridfs import GridFS
 from urllib.request import urlopen
@@ -15,6 +15,7 @@ from matplotlib import animation
 myclient = MongoClient("mongodb+srv://andreinapruiu:xLOLaVRwqWOA2DUt@cluster0.dw2sytn.mongodb.net/test")
 mydb = myclient["smarket-api-db"]
 mycol = mydb["product"]
+myshoppingList = mydb["shoppingList"]
 
 
 grid = np.array([
@@ -57,8 +58,7 @@ goal = (0, 14)
 def euclidean_distance(a, b):
     return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
 
-# nearest neighbor algorithm
-def find_path(nodes, start, end):
+def find_path(nodes, start, end, product_names):
     # Initialize path with start node
     path = [start]
 
@@ -78,14 +78,85 @@ def find_path(nodes, start, end):
     # Add end node to path
     path.append(end)
 
-    return path
+    # Sort product names based on the order of the nodes in the path
+    sorted_product_names = [product_names[nodes.index(node)] for node in path if node in nodes]
+
+    return path, sorted_product_names
+
+last_document = myshoppingList.find_one(sort=[('_id', DESCENDING)])
+productList = last_document['productList']
+
+product_names = []
+
+for product in productList:
+	product_document = mydb.dereference(product)
+	product_names.append(product_document['name'])
+
+max_row = 15
+max_column = 4
+min_column = 1
+coordinates = []
+for product in productList:
+	product_document = mydb.dereference(product)
+	row = product_document['row']
+	shelve = product_document['shelve']
+	section = product_document['section']
+	if row == 11:
+		start_row = 5
+		start_section = 6
+                
+		coordinates.append((start_row - section, start_section))
+	elif row == 16:
+		start_row = 5
+		start_section = 7
+		
+		coordinates.append((start_row - section, start_section))
+	elif row == 14:
+		start_row = 5
+		start_section = 10
+                
+		coordinates.append((start_row - section, start_section))
+	elif row == 12:
+		start_row = 5
+		start_section = 11
+                
+		coordinates.append((start_row - section, start_section))
+	elif row == 10:
+		start_row = 5
+		start_section = 14
+                
+		coordinates.append((start_row - section, start_section))
+	elif row == 1 or row == 5 or row == 9:
+		start_section = 1
+		coordinates.append((max_row - row, max_column - section + start_section))
+	elif row == 3 or row == 7 or row == 13:
+		start_section = 1
+		coordinates.append((max_row - row - 1, max_column - section + start_section))
+	elif row == 15:
+		start_section = 5
+		coordinates.append((max_row - row + 1, start_section + section - min_column))
+	elif row == 2 or row == 6:
+		start_section = 10
+		coordinates.append((max_row - row + 1, start_section + section - min_column))
+	elif row == 4 or row == 8:
+		start_section = 10
+		coordinates.append((max_row - row, start_section + section - min_column))
+    
+print(coordinates)
+print(product_names)
 
 # Find the paths between the nodes
 nodes = [(10, 4), (7, 10), (12, 5), (6, 3), (5, 7), (4, 11), (10, 0), (2, 11), (8, 0)]
-path = find_path(nodes, start, goal)
+nodes = coordinates
+path, new_product_names = find_path(nodes, start, goal, product_names=product_names)
 
 # Print the paths
 print(path)
+print(new_product_names)
+
+# Add the new product names to the database
+mysortedshoppingList = mydb["sortedShoppingList"]
+mysortedshoppingList.insert_one({'productList': new_product_names})
 
 # Extract x and y coordinates from the path list
 x_coords = []
