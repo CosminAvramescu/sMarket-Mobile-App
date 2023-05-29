@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   Future<void> _addToShoppingList() async {
     final http.Response response;
     response = await http.post(
-      Uri.parse('https://smarket-app.herokuapp.com/shoppingList/save'),
+      Uri.parse('http://localhost:8082/shoppingList/save'),
       body: jsonEncode(favoriteProducts.map((product) => product.toMap()).toList()),
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
         'Accept': '*/*',
       },
     );
-    GridCartState("singleton").update(jsonDecode(response.body) as List<dynamic>);
+    //GridCartState("singleton").update(jsonDecode(response.body) as List<dynamic>);
   }
 
   @override
@@ -123,7 +123,7 @@ class HomePage extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             print("here categories");
-                            _getProductsSearched(ctrl.text);
+                            //_getProductsSearched(ctrl.text);
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(right: 10),
@@ -145,7 +145,7 @@ class HomePage extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    GridCartState("singleton").update([]);
+                    //GridCartState("singleton").update([]);
                     Navigator.pop(context);
                   } ,
                   child: Text(
@@ -161,7 +161,7 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     shoppingList=true;
                     _addToShoppingList();
-                    GridCartState("singleton").update([]);
+                    //GridCartState("singleton").update([]);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => CategoriesPage()),

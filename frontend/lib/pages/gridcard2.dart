@@ -13,7 +13,8 @@ class GridCard2 extends StatelessWidget {
       future: fetchShoppingList(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final shoppingList = snapshot.data as List<dynamic>;
+          var shoppingList = snapshot.data as List<dynamic>;
+          int cmz=1;
           return SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
@@ -47,7 +48,7 @@ class GridCard2 extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${i+1}) ${shoppingList[i]['name']}",
+                                  "${cmz++}) ${shoppingList[i]['name']}",
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -72,7 +73,7 @@ class GridCard2 extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ChangingButton(),
+                               ChangingButton(),
                             ],
                           ),
                         ),
@@ -95,7 +96,7 @@ class GridCard2 extends StatelessWidget {
 // Asynchronous function to fetch the shopping list
 Future<List<dynamic>> fetchShoppingList() async {
   final response = await http.get(
-    Uri.parse('https://smarket-app.herokuapp.com/shoppingList/get'),
+    Uri.parse('http://127.0.0.1:5000/getProductList'),
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',

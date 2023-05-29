@@ -6,7 +6,6 @@ import 'package:frontend/pages/lastpage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'gridcard2.dart';
 
 class CategoriesPage extends StatelessWidget {
@@ -165,18 +164,20 @@ class CategoriesPage extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     // Set all variables to true
-                    all = true;
+                    if(shoppingList==false){
+                      all = true;
+                    }
                     // Navigate to HomePage
                     if(shoppingList==true){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => const LastPage()),
                       );
                     }
                     else{
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => shoppingList == true ? HomePage():const LastPage()),
+                        MaterialPageRoute(builder: (context) =>HomePage() ),
                       );
                     }
                   },

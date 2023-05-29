@@ -7,7 +7,7 @@ class GridCart extends StatefulWidget {
   const GridCart({Key? key}) : super(key: key);
 
   @override
-  GridCartState createState() => GridCartState("gridcart");
+  GridCartState createState() => GridCartState();
 }
 
 class FavoriteProduct {
@@ -32,18 +32,18 @@ List<FavoriteProduct> favoriteProducts = [];
 List<dynamic>? products;
 
 class GridCartState extends State<GridCart> {
-  static GridCartState? _instance;
-
-  GridCartState._internal();
-
-  factory GridCartState(String caller) {
-    if (caller == "gridcart") {
-      return _instance=GridCartState._internal();
-    } else {
-      _instance ??= GridCartState._internal();
-      return _instance!;
-    }
-  }
+  // static GridCartState? _instance;
+  //
+  // GridCartState._internal();
+  //
+  // factory GridCartState(String caller) {
+  //   if (caller == "gridcart") {
+  //     return _instance=GridCartState._internal();
+  //   } else {
+  //     _instance ??= GridCartState._internal();
+  //     return _instance!;
+  //   }
+  // }
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class GridCartState extends State<GridCart> {
           'Accept': '*/*',
         },
       );
-    } else {
+    } else{
       response = await http.get(
         Uri.parse('https://smarket-app.herokuapp.com/product/getAllProducts'),
         headers: {

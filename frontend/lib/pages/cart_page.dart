@@ -106,7 +106,7 @@ class CartPage extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             print("here products");
-                            _getProductsSearched(ctrl.text);
+                            //_getProductsSearched(ctrl.text);
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(right: 10),

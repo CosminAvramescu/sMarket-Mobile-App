@@ -39,7 +39,7 @@ class _GridCategoriesState extends State<GridCategories> {
     }
     else{
       final response = await http.get(
-        Uri.parse('https://smarket-app.herokuapp.com/shoppingList/get'),
+        Uri.parse('http://localhost:8082/shoppingList/get'),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -48,7 +48,7 @@ class _GridCategoriesState extends State<GridCategories> {
           'Accept': '*/*',
         },
       );
-      shoppingList=false;
+      //shoppingList=false;
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as List<dynamic>;
       } else {
@@ -60,7 +60,6 @@ class _GridCategoriesState extends State<GridCategories> {
   void _onCategoryTap(String categoryName) {
     setState(() {
       category = categoryName;
-
     });
   }
 
