@@ -2,7 +2,6 @@
 <br />
 <div align="center">
   <p align="center">
-    <br />
     <a href="https://drive.google.com/file/d/1dQuJc2GO4kuoOboq9Vo5e3zpe2m1m4eb/view">View Demo</a>
   </p>
 </div>
