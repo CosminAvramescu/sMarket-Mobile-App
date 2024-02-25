@@ -22,7 +22,7 @@ List<int> imageData = [];
 Uint8List uint8List = Uint8List.fromList(imageData);
 
 class LastPageState extends State<LastPage> {
-  int mapNumber = 0;
+  static int mapNumber = 0;
 
   static LastPageState? _instance;
 
@@ -65,10 +65,8 @@ class LastPageState extends State<LastPage> {
     }
   }
 
-  void update() {
-    setState(() {
-      mapNumber++;
-    });
+  static void update() {
+    mapNumber++;
   }
 
   @override

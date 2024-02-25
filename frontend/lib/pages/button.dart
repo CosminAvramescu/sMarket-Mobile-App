@@ -15,7 +15,7 @@ class _ChangingButtonState extends State<ChangingButton> {
     setState(() {
       print(isPressed);
       isPressed = !isPressed;
-      LastPageState("button").update();
+      LastPageState.update();
       print(isPressed);
     });
   }
@@ -31,8 +31,8 @@ class _ChangingButtonState extends State<ChangingButton> {
               width: 70,
               height: 40,
               color: Colors.blue,
-              child: Center(
-                child: const Text(
+              child: const Center(
+                child: Text(
                   'Got it',
                   style: TextStyle(color: Colors.white),
                 ),

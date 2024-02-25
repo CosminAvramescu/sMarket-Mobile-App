@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
 
   void _getProductsSearched(String name) async {
     var response = await http.get(
-      Uri.parse('https://smarket-app.herokuapp.com/product/search/${name}'),
+      Uri.parse('http://localhost:8082/product/search/${name}'),
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',

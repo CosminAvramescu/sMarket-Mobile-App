@@ -1,4 +1,6 @@
 import heapq
+import json
+
 from matplotlib import patches
 import matplotlib
 import numpy as np
@@ -11,17 +13,13 @@ from urllib.request import urlopen
 import math
 from matplotlib.pyplot import arrow
 from matplotlib import animation
-from flask import Flask, make_response
+from flask import Flask, make_response, jsonify
 from io import BytesIO
 import requests
+
 app = Flask(__name__)
-    
-    
-myclient = MongoClient("mongodb+srv://andreinapruiu:xLOLaVRwqWOA2DUt@cluster0.dw2sytn.mongodb.net/test")
-mydb = myclient["smarket-api-db"]
-mycol = mydb["product"]
-myshoppingList = mydb["shoppingList"]
-index=0
+
+index = 0
 
 grid = np.array([
     [0, 0, 0, 0, 0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0],
@@ -39,12 +37,14 @@ grid = np.array([
     [0, 4, 3, 2, 1, 0, 0, 0, 0, 0, 1, 2, 3, 4, 0],
     [0, 4, 3, 2, 1, 0, 0, 0, 0, 0, 1, 2, 3, 4, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ])
+])
 
 # start point and goal
 start = (14, 7)
 goal = (0, 14)
-path_r=[[]]
+path_r = [[]]
+new_product_names = []
+
 
 # def line_intersects(a1, a2, b1, b2):
 #     def ccw(a, b, c):
@@ -62,7 +62,8 @@ path_r=[[]]
 #         return False
 
 def euclidean_distance(a, b):
-    return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
+    return math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2)
+
 
 def find_path(nodes, start, end, product_names):
     # Initialize path with start node
@@ -88,60 +89,54 @@ def find_path(nodes, start, end, product_names):
     sorted_product_names = [product_names[nodes.index(node)] for node in path if node in nodes]
 
     return path, sorted_product_names
-    #byte_array.append(img_data.getvalue())
-    
+    # byte_array.append(img_data.getvalue())
+
     # plt.savefig(img_data, format='png')
     # img_data.seek(0)
     # fs.put(img_data, filename=filename)
     # arrow1.set_visible(False)
 
+
 @app.route("/get_images_data", methods=['GET'])
 def get_images_data():
     global index
     global path_r
-    index=0
-    last_document = myshoppingList.find_one(sort=[('_id', DESCENDING)])
-    productList = last_document['productList']
+    global new_product_names
+    index = 0
 
-    product_names = []
-
-    for product in productList:
-        product_document = mydb.dereference(product)
-        product_names.append(product_document['name'])
+    product_names = get_products()
 
     max_row = 15
     max_column = 4
     min_column = 1
     coordinates = []
-    for product in productList:
-        product_document = mydb.dereference(product)
-        row = product_document['row']
-        shelve = product_document['shelve']
-        section = product_document['section']
+    for product in product_names:
+        row = product['row']
+        section = product['section']
         if row == 11:
             start_row = 5
             start_section = 6
-                    
+
             coordinates.append((start_row - section, start_section))
         elif row == 16:
             start_row = 5
             start_section = 7
-            
+
             coordinates.append((start_row - section, start_section))
         elif row == 14:
             start_row = 5
             start_section = 10
-                    
+
             coordinates.append((start_row - section, start_section))
         elif row == 12:
             start_row = 5
             start_section = 11
-                    
+
             coordinates.append((start_row - section, start_section))
         elif row == 10:
             start_row = 5
             start_section = 14
-                    
+
             coordinates.append((start_row - section, start_section))
         elif row == 1 or row == 5 or row == 9:
             start_section = 1
@@ -158,7 +153,7 @@ def get_images_data():
         elif row == 4 or row == 8:
             start_section = 10
             coordinates.append((max_row - row, start_section + section - min_column))
-        
+
     print(coordinates)
     print(product_names)
 
@@ -193,7 +188,8 @@ def get_images_data():
     for i in range(grid.shape[0]):
         for j in range(grid.shape[1]):
             if grid[i, j] == 0:
-                rect = plt.Rectangle((j - 0.5 + 0.5 * grid[i,j], i - 0.5 + 0.5 * grid[i,j]), 1, 1, fill=False, edgecolor='#EAECEE', lw=2)
+                rect = plt.Rectangle((j - 0.5 + 0.5 * grid[i, j], i - 0.5 + 0.5 * grid[i, j]), 1, 1, fill=False,
+                                     edgecolor='#EAECEE', lw=2)
                 ax.add_patch(rect)
                 ax.plot([j - 0.5, j + 0.5], [i, i], color='#EAECEE')
                 ax.plot([j, j], [i - 0.5, i + 0.5], color='#EAECEE')
@@ -212,10 +208,11 @@ def get_images_data():
     # Plot the nodes
     for node in nodes:
         ax.scatter(node[1], node[0], marker="o", color="#88B6A5", s=2000, zorder=10)
-        
+
     # Put numbers on the nodes from the path
     for i in range(len(path_r)):
-        ax.text(path_r[i][1], path_r[i][0], str(i), color="black", fontsize=25, ha="center", va="center", fontweight='bold', zorder=20)
+        ax.text(path_r[i][1], path_r[i][0], str(i), color="black", fontsize=25, ha="center", va="center",
+                fontweight='bold', zorder=20)
 
     # Plot the start and goal points
     ax.scatter(start[1], start[0], marker="o", color="#F56457", s=2000, zorder=10)
@@ -223,35 +220,43 @@ def get_images_data():
 
     # Plot the path
     ax.plot(y_coords, x_coords, color="#6979B2", linewidth=5)
+    return "ok"
+
 
 @app.route("/get", methods=['GET'])
 def get_products():
-    headers = {
-    'Origin': '*'  # Replace with the allowed origin
-    }
-    requests.get("http://127.0.0.1:8082/shoppingList/getP", headers=headers)
-    print(response.text)
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.get("https://smarket-app.herokuapp.com/shoppingList/getP", headers=headers)
+    data = json.loads(response.text)
+    print(data)
+    return data
+
+
+@app.route("/getProductList", methods=['GET'])
+def get_product_list():
+    global new_product_names
+    print(new_product_names)
+    return new_product_names
+
 
 @app.route("/get_image_data", methods=['GET'])
 def get_image_data():
     global index
     global path_r
-    byte_array=[]
-    # Define the arrow object outside of the loop
-    #for i in range(len(path) - 1):
-    arrow1 = arrow(path_r[index][1], path_r[index][0], path_r[index+1][1] - path_r[index][1], 
-                   path_r[index+1][0] - path_r[index][0], width=0.1, color='#F56457', zorder=11)
+    arrow1 = arrow(path_r[index][1], path_r[index][0], path_r[index + 1][1] - path_r[index][1],
+                   path_r[index + 1][0] - path_r[index][0], width=0.1, color='#F56457', zorder=11)
     filename = 'file' + str(index) + '.png'
     img_data = BytesIO()
     plt.savefig(img_data, format='png')
     img_data.seek(0)
-    byte_array=img_data.getvalue()
+    byte_array = img_data.getvalue()
     response = make_response(byte_array)
     response.headers.set("Content-Type", "image/png")
-    index+=1
+    index += 1
     arrow1.set_visible(False)
     return response
 
+
 if __name__ == "__main__":
-    app.run(host='172.27.1.160', port=5002)
-#plt.savefig('file.png')
+    app.run()

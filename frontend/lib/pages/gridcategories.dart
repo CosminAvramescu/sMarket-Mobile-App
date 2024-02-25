@@ -20,7 +20,7 @@ class _GridCategoriesState extends State<GridCategories> {
   Future<List<dynamic>> _fetchProducts() async {
     if(shoppingList==false){
       final response = await http.get(
-        Uri.parse('https://smarket-app.herokuapp.com/category/getAll'),
+        Uri.parse('http://localhost:8082/category/getAll'),
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
