@@ -63,7 +63,7 @@
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/CosminAvramescu/sMarket-App.git
+   git clone https://github.com/CosminAvramescu/sMarket-Mobile-App.git
    ```
 
 2. Install Python and Java
@@ -106,7 +106,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Cosmin-Alexandru Avramescu - [@my_linkedin](https://www.linkedin.com/in/cosmin-avramescu/)
 
-Project Link: [https://github.com/CosminAvramescu/sMarket-App](https://github.com/CosminAvramescu/sMarket-App)
+Project Link: [https://github.com/CosminAvramescu/sMarket-Mobile-App](https://github.com/CosminAvramescu/sMarket-Mobile-App)
 
 
 <!-- ACKNOWLEDGMENTS -->
