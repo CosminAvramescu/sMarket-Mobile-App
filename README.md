@@ -8,30 +8,27 @@
 
 <!-- ABOUT THE PROJECT -->
 # ABOUT THE PROJECT
-![architecture](https://i.imgur.com/Qs8rcZl.png)
 <div align="center">
   <p align="center">
-	<img src="https://i.imgur.com/OBebCko.png" width="200" height="200" />
-	<img src="https://i.imgur.com/zApUehw.png" width="100" height="200" />
-	<img src="https://i.imgur.com/1AFSxRq.png" width="200" height="200" />
+	<img src="https://i.imgur.com/OBebCko.png" width="250" height="250" />
+	<img src="https://i.imgur.com/zApUehw.png" width="125" height="250" />
+	<img src="https://i.imgur.com/1AFSxRq.png" width="250" height="250" />
   </p>
 </div>
 
-	Flask REST API for a weather service which provides info about countries, cities and temperatures.
+	    Your minutes are gold, s'Market is here to hold!
+
+	    On the B2B side, s'Market generates the optimal route for in-store product pickers to 
+    gather all the products on the customer's shopping list. Through indoor store mapping and 
+    optimization algorithms, s'Market improves pickers' work and delivers 100% yield even for 
+    inexperienced pickers from day one.
+	    On the B2C side, s'Market generates the optimal route to a single product in the store. In 
+    addition, we provide customer satisfaction and valuable data about the routes customers use so that the 
+    store can optimize product placement on the shelves.
+
 
 ---Architecture
-
-	    As seen in docker-compose.yml, I have 3 microservices (python-rest-api, MongoDB database and
-    mongo express database utility). I have used 2 networks, one between rest api and mongo db and 
-    one between mongo db and mongo express. Both mongo db and mongo express are protected by user and 
-    password authentication, credentials are found in docker compose. I also used 2 volumes, one for 
-    mongo db and one for mongo express. At running docker-compose, the database is initialized with the
-    init-db.js script (create the 3 collections - country, city and temperatures and set for each unique
-    constraints on the required fields). 
-	    In Dockerfile I install the packages from requirments.txt, set the current directory, host
-    and port on which the application runs. In docker-compose.yml, I drag the mongo db and mongo express
-    images, I put the credentials in environment variables, and set the ports and volumes for
-    data persistence. Build the api from Dockerfile.
+![architecture](https://i.imgur.com/Qs8rcZl.png)
 
 ---General aspects
 
@@ -44,9 +41,6 @@
 	    ➤ optimizing algorithms
 	    ➤ client satisfaction
 
-	    s'Market generates the optimal route for in-store product pickers to gather all the products on 
-    the customer's shopping list. Through indoor store mapping and optimization algorithms, s' Market 
-    improves pickers' work and delivers 100% yield even for inexperienced pickers from day one.
 	    The picker scans each product in front of its shelf. We can make a decision based on the scanning 
     output. The system can print the following route once the product is successfully scanned by the 
     picker (from product 1 to product 2, then from product 2 to product 3, and so on). The "Got it" 
