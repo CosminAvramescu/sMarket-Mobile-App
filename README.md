@@ -12,8 +12,9 @@ s-Market-App
 <!-- ABOUT THE PROJECT -->
 # ABOUT THE PROJECT
 ![architecture](https://i.imgur.com/Qs8rcZl.png)
-![architecture](https://i.imgur.com/4bNWN60.png)
-![architecture](https://i.imgur.com/OBebCko.png)
+![architecture](https://i.imgur.com/4bNWN60.png =100x20)
+![architecture](https://i.imgur.com/OBebCko.png =100x20)
+![architecture](https://i.imgur.com/zApUehw.png)
 
 	Flask REST API for a weather service which provides info about countries, cities and temperatures.
 
@@ -33,15 +34,22 @@ s-Market-App
 
 ---General aspects
 
-	    Since MongoDB puts by default a "_id" field of type ObjectID(), the following operations were
-    executed several times: update json with "id" instead of "_id" or vice versa and convert from 
-    ObjectID() to string to serialize the object and return the response. 
-	    Besides checking all error cases I could think of, there are insert_one() operations for 
-    adding, find_one() for find element, find() for finding all elements, update_one() for put and 
-    delete_one() for delete. All these methods in pymongo can receive a json as query parameter. For 
-    more complicated queries, I used the syntax "$in": cities, to set the search according to the ids 
-    in the previously constructed city array, and for the timestamp we used "$lte" to set the date 
-    search lower than until and "$gte" to set the date search higher than from. 
+	PROBLEM
+	    ➤ inefficient picking
+	    ➤ time & money wasted
+	    ➤ limited staff resources
+	SOLUTION
+	    ➤ supermarket mapping
+	    ➤ optimizing algorithms
+	    ➤ client satisfaction
+
+	s'Market generates the optimal route for in-store product pickers to gather all the products on 
+    the customer's shopping list. Through indoor store mapping and optimization algorithms, s' Market 
+    improves pickers' work and delivers 100% yield even for inexperienced pickers from day one.
+	The picker scans each product in front of its shelf. We can make a decision based on the scanning 
+    output. The system can print the following route once the product is successfully scanned by the 
+    picker (from product 1 to product 2, then from product 2 to product 3, and so on). The "Got it" 
+    button on the MVP represents the equivalent of the scan output.
 
 
 ### Built With
