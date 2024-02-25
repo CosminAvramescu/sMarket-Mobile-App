@@ -1,11 +1,9 @@
-s-Market-App
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <p align="center">
     <br />
-    <a href="https://drive.google.com/file/d/1dQuJc2GO4kuoOboq9Vo5e3zpe2m1m4eb/view">View Demo</a>
+    <a href="https://drive.google.com/file/d/1dQuJc2GO4kuoOboq9Vo5e3zpe2m1m4eb/view"><h2>View Demo</h2></a>
   </p>
 </div>
 
@@ -15,7 +13,7 @@ s-Market-App
 <div align="center">
   <p align="center">
 	<img src="https://i.imgur.com/OBebCko.png" width="200" height="200" />
-	<img src="https://i.imgur.com/zApUehw.png" width="100" height="200" />
+	<img src="https://i.imgur.com/1AFSxRq.png" width="100" height="200" />
 	<img src="https://i.imgur.com/4bNWN60.png" width="200" height="200" />
   </p>
 </div>
@@ -47,10 +45,10 @@ s-Market-App
 	    ➤ optimizing algorithms
 	    ➤ client satisfaction
 
-	s'Market generates the optimal route for in-store product pickers to gather all the products on 
+	    s'Market generates the optimal route for in-store product pickers to gather all the products on 
     the customer's shopping list. Through indoor store mapping and optimization algorithms, s' Market 
     improves pickers' work and delivers 100% yield even for inexperienced pickers from day one.
-	The picker scans each product in front of its shelf. We can make a decision based on the scanning 
+	    The picker scans each product in front of its shelf. We can make a decision based on the scanning 
     output. The system can print the following route once the product is successfully scanned by the 
     picker (from product 1 to product 2, then from product 2 to product 3, and so on). The "Got it" 
     button on the MVP represents the equivalent of the scan output.
