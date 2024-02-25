@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/lastpage.dart';
 
+
 class ChangingButton extends StatefulWidget {
   const ChangingButton({Key? key}) : super(key: key);
 
@@ -10,11 +11,12 @@ class ChangingButton extends StatefulWidget {
 
 class _ChangingButtonState extends State<ChangingButton> {
   bool isPressed = false;
-
   void _toggleButtonState() {
     setState(() {
+      print(isPressed);
       isPressed = !isPressed;
-      LastPageState.getInstance().update();
+      LastPageState.update();
+      print(isPressed);
     });
   }
 
@@ -29,8 +31,8 @@ class _ChangingButtonState extends State<ChangingButton> {
               width: 70,
               height: 40,
               color: Colors.blue,
-              child: Center(
-                child: const Text(
+              child: const Center(
+                child: Text(
                   'Got it',
                   style: TextStyle(color: Colors.white),
                 ),

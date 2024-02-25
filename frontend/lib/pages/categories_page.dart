@@ -6,7 +6,6 @@ import 'package:frontend/pages/lastpage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'gridcard2.dart';
 
 class CategoriesPage extends StatelessWidget {
@@ -15,7 +14,7 @@ class CategoriesPage extends StatelessWidget {
 
   void _getProductsSearched(String name) async {
      var response = await http.get(
-      Uri.parse('https://smarket-app.herokuapp.com/product/search/${name}'),
+      Uri.parse('http://localhost:8082/product/search/${name}'),
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -165,18 +164,20 @@ class CategoriesPage extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     // Set all variables to true
-                    all = true;
+                    if(shoppingList==false){
+                      all = true;
+                    }
                     // Navigate to HomePage
                     if(shoppingList==true){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => const LastPage()),
                       );
                     }
                     else{
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => shoppingList == true ? HomePage():const LastPage()),
+                        MaterialPageRoute(builder: (context) =>HomePage() ),
                       );
                     }
                   },
