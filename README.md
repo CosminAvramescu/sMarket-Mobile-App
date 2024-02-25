@@ -12,8 +12,8 @@ s-Market-App
 <!-- ABOUT THE PROJECT -->
 # ABOUT THE PROJECT
 ![architecture](https://i.imgur.com/Qs8rcZl.png)
-![architecture](https://i.imgur.com/4bNWN60.png =80x70)
-![architecture](https://i.imgur.com/OBebCko.png =80x70)
+<img src="https://i.imgur.com/OBebCko.png" width="200" height="200" />
+<img src="https://i.imgur.com/4bNWN60.png" width="200" height="200" />
 ![architecture](https://i.imgur.com/zApUehw.png)
 
 	Flask REST API for a weather service which provides info about countries, cities and temperatures.
