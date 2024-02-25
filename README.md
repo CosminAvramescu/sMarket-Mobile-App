@@ -48,10 +48,13 @@
 
 
 ### Built With
+* [![Spring][Spring]][Spring-url]
+* [![Java][Java]][Java-url]
+* [![Flask][Flask]][Flask-url]
 * [![Python][Python]][Python-url]
-* [![Javascript][Javascript]][Javascript-url]
-* [![Docker][Docker]][Docker-url]
-
+* [![Flutter][Flutter]][Flutter-url]
+* [![Dart][Dart]][Dart-url]
+* [![MongoDB][MongoDB]][MongoDB-url]
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -68,19 +71,21 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/CosminAvramescu/Python-MongoDB-Containerized-REST-API.git
+   git clone https://github.com/CosminAvramescu/sMarket-App.git
    ```
-2. Install Docker
 
+2. Install Python and Java
+
+3. Install Android Studio, Flutter and Dart
+
+4. Install MongoDB Server and MongoDB Compass
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-1. Run Docker daemon
-2. Run "docker compose up"
-3. Check mongo express at localhost:8081
-4. Run the collection of tests in Postman (import postman_testing_script.json file)
-
+1. Run Spring backend
+2. Run Python backend
+3. Run Flutter frontend
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -109,15 +114,15 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Cosmin-Alexandru Avramescu - [@my_linkedin](https://www.linkedin.com/in/cosmin-avramescu/)
 
-Project Link: [https://github.com/CosminAvramescu/Python-MongoDB-Containerized-REST-API](https://github.com/CosminAvramescu/Python-MongoDB-Containerized-REST-API)
+Project Link: [https://github.com/CosminAvramescu/sMarket-App](https://github.com/CosminAvramescu/sMarket-App)
 
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Docker + python rest api](https://dev.to/francescoxx/python-fullstack-rest-api-app-with-docker-1101)
-* [Docker compose](https://docs.docker.com/compose/)
-
+* [Spring + MongoDB](https://www.mongodb.com/compatibility/spring-boot)
+* [A* shortest path](https://neo4j.com/docs/graph-data-science/current/algorithms/astar/)
+* [Flutter + Spring](https://medium.com/nerd-for-tech/flutter-series-connecting-ui-to-spring-boot-backend-f9874dc3dcd5)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -127,9 +132,17 @@ Project Link: [https://github.com/CosminAvramescu/Python-MongoDB-Containerized-R
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
+[Spring]: https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white
+[Spring-url]: https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
+[Java]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
+[Java-url]: https://docs.oracle.com/en/java/
+[Flask]: https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white
+[Flask-url]: https://flask.palletsprojects.com/en/3.0.x/
 [Python]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://docs.python.org/3.10/
-[Javascript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
-[Javascript-url]: https://devdocs.io/javascript/
-[Docker]: https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white
-[Docker-url]: https://docs.docker.com/
+[Flutter]: https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white
+[Flutter-url]: https://docs.flutter.dev/
+[Dart]: https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white
+[Dart-url]: https://dart.dev/guides
+[MongoDB]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
+[MongoDB-url]: https://www.mongodb.com/docs/
