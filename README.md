@@ -12,9 +12,13 @@ s-Market-App
 <!-- ABOUT THE PROJECT -->
 # ABOUT THE PROJECT
 ![architecture](https://i.imgur.com/Qs8rcZl.png)
-<img src="https://i.imgur.com/OBebCko.png" width="200" height="200" />
-<img src="https://i.imgur.com/4bNWN60.png" width="200" height="200" />
-![architecture](https://i.imgur.com/zApUehw.png)
+<div align="center">
+  <p align="center">
+	<img src="https://i.imgur.com/OBebCko.png" width="200" height="200" />
+	<img src="https://i.imgur.com/zApUehw.png" width="100" height="200" />
+	<img src="https://i.imgur.com/4bNWN60.png" width="200" height="200" />
+  </p>
+</div>
 
 	Flask REST API for a weather service which provides info about countries, cities and temperatures.
 
