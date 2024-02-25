@@ -5,15 +5,15 @@ s-Market-App
 <div align="center">
   <p align="center">
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://drive.google.com/file/d/1dQuJc2GO4kuoOboq9Vo5e3zpe2m1m4eb/view">View Demo</a>
   </p>
 </div>
 
 <!-- ABOUT THE PROJECT -->
 # ABOUT THE PROJECT
 ![architecture](https://i.imgur.com/Qs8rcZl.png)
-![architecture](https://i.imgur.com/4bNWN60.png =100x20)
-![architecture](https://i.imgur.com/OBebCko.png =100x20)
+![architecture](https://i.imgur.com/4bNWN60.png =80x70)
+![architecture](https://i.imgur.com/OBebCko.png =80x70)
 ![architecture](https://i.imgur.com/zApUehw.png)
 
 	Flask REST API for a weather service which provides info about countries, cities and temperatures.
