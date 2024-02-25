@@ -3,7 +3,7 @@
 <div align="center">
   <p align="center">
     <br />
-    <a href="https://drive.google.com/file/d/1dQuJc2GO4kuoOboq9Vo5e3zpe2m1m4eb/view"><h2>View Demo</h2></a>
+    <a href="https://drive.google.com/file/d/1dQuJc2GO4kuoOboq9Vo5e3zpe2m1m4eb/view">View Demo</a>
   </p>
 </div>
 
@@ -13,8 +13,8 @@
 <div align="center">
   <p align="center">
 	<img src="https://i.imgur.com/OBebCko.png" width="200" height="200" />
-	<img src="https://i.imgur.com/1AFSxRq.png" width="100" height="200" />
-	<img src="https://i.imgur.com/4bNWN60.png" width="200" height="200" />
+	<img src="https://i.imgur.com/zApUehw.png" width="100" height="200" />
+	<img src="https://i.imgur.com/1AFSxRq.png" width="200" height="200" />
   </p>
 </div>
 
