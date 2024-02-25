@@ -22,12 +22,12 @@
     gather all the products on the customer's shopping list. Through indoor store mapping and 
     optimization algorithms, s'Market improves pickers' work and delivers 100% yield even for 
     inexperienced pickers from day one.
-	    On the B2C side, s'Market generates the optimal route to a single product in the store. In 
-    addition, we provide customer satisfaction and valuable data about the routes customers use so that the 
-    store can optimize product placement on the shelves.
+	    On the B2C side, s'Market generates the optimal route to a single product in the store. 
+    In addition, we provide customer satisfaction and valuable data about the routes customers use 
+    so that the store can optimize product placement on the shelves.
 
-
----Architecture
+<!-- Architecture -->
+# Architecture
 ![architecture](https://i.imgur.com/Qs8rcZl.png)
 
 ---General aspects
