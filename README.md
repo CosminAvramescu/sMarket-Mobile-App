@@ -41,10 +41,10 @@
 	    ➤ optimizing algorithms
 	    ➤ client satisfaction
 
-	    The picker scans each product in front of its shelf. We can make a decision based on the scanning 
-    output. The system can print the following route once the product is successfully scanned by the 
-    picker (from product 1 to product 2, then from product 2 to product 3, and so on). The "Got it" 
-    button on the MVP represents the equivalent of the scan output.
+	    The picker scans each product in front of its shelf. We can make a decision based on the 
+    scanning output. The system can print the following route once the product is successfully 
+    scanned by the picker (from product 1 to product 2, then from product 2 to product 3, and so on). 
+    The "Got it" button on the MVP represents the equivalent of the scan output.
 
 
 ### Built With
@@ -58,14 +58,6 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
 
 ### Installation
 
