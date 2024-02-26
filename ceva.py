@@ -12,7 +12,7 @@ import math
 from matplotlib.pyplot import arrow
 from matplotlib import animation
 
-myclient = MongoClient("mongodb+srv://andreinapruiu:xLOLaVRwqWOA2DUt@cluster0.dw2sytn.mongodb.net/test")
+myclient = MongoClient("YOUR MONGO DB URI")
 mydb = myclient["smarket-api-db"]
 mycol = mydb["product"]
 
