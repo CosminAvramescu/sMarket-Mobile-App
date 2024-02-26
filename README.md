@@ -72,7 +72,7 @@
 
 4. Install MongoDB Server and MongoDB Compass
 
-5. Replace spring.data.mongodb.uri="YOUR MONGO DB URI" -> file application.properties from Spring backend
+5. Replace database, username, password and URI -> file application.properties from Spring backend
 
 <!-- USAGE EXAMPLES -->
 ## Usage
