@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from gridfs import GridFS
 import os
 
-myclient = MongoClient("mongodb+srv://andreinapruiu:xLOLaVRwqWOA2DUt@cluster0.dw2sytn.mongodb.net/test")
+myclient = MongoClient("YOUR MONGO DB URI")
 mydb = myclient["smarket-api-db"]
 fs = GridFS(mydb)
 
